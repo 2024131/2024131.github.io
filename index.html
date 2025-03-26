@@ -3,27 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My TurboWarp Game</title>
+    <title>Galactic Adventure | TurboWarp Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --light-bg: #f5f5f5;
-            --light-text: #333;
-            --light-accent: #4a6fa5;
-            --dark-bg: #1a1a1a;
-            --dark-text: #f0f0f0;
-            --dark-accent: #7ba2ff;
+            --light-bg: #f8f9fa;
+            --light-text: #212529;
+            --light-accent: #4361ee;
+            --light-secondary: #6c757d;
+            --light-card: #ffffff;
+            --dark-bg: #121212;
+            --dark-text: #e9ecef;
+            --dark-accent: #4895ef;
+            --dark-secondary: #adb5bd;
+            --dark-card: #1e1e1e;
+            --spacing: 2rem;
+            --max-width: 1200px;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
             background: var(--light-bg);
             color: var(--light-text);
-            transition: all 0.3s ease;
-            max-width: 1000px;
-            margin: 0 auto;
-            line-height: 1.6;
+            transition: all 0.4s ease;
         }
         
         body.dark {
@@ -31,94 +42,280 @@
             color: var(--dark-text);
         }
         
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+        
+        /* Header Styles */
         header {
+            background: linear-gradient(135deg, var(--light-accent) 0%, #3f37c9 100%);
+            color: white;
+            padding: 3rem 0;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: var(--spacing);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        body.dark header {
+            background: linear-gradient(135deg, var(--dark-accent) 0%, #3a0ca3 100%);
         }
         
         h1 {
-            color: var(--light-accent);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
-        body.dark h1 {
-            color: var(--dark-accent);
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
-        .game-container {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+        /* Game Container */
+        .game-section {
+            background: var(--light-card);
+            border-radius: var(--border-radius);
+            padding: var(--spacing);
+            box-shadow: var(--shadow);
+            margin-bottom: var(--spacing);
         }
         
-        body.dark .game-container {
-            background: #222;
+        body.dark .game-section {
+            background: var(--dark-card);
         }
         
         iframe {
             width: 100%;
             height: 600px;
             border: none;
-            border-radius: 5px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
         }
         
-        .mode-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--light-bg);
-            border: 1px solid var(--light-accent);
+        /* Info Sections */
+        .info-card {
+            background: var(--light-card);
+            border-radius: var(--border-radius);
+            padding: var(--spacing);
+            margin-bottom: var(--spacing);
+            box-shadow: var(--shadow);
+        }
+        
+        body.dark .info-card {
+            background: var(--dark-card);
+        }
+        
+        h2 {
             color: var(--light-accent);
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            border-bottom: 3px solid var(--light-accent);
+            padding-bottom: 0.5rem;
+            display: inline-block;
         }
         
-        body.dark .mode-toggle {
-            background: var(--dark-bg);
-            border-color: var(--dark-accent);
+        body.dark h2 {
+            color: var(--dark-accent);
+            border-bottom-color: var(--dark-accent);
+        }
+        
+        h3 {
+            color: var(--light-accent);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        body.dark h3 {
             color: var(--dark-accent);
         }
         
-        .instructions {
-            background: rgba(0,0,0,0.05);
-            padding: 15px;
-            border-radius: 5px;
-            margin: 20px 0;
+        p {
+            margin-bottom: 1rem;
+            color: var(--light-secondary);
         }
         
-        body.dark .instructions {
-            background: rgba(255,255,255,0.05);
+        body.dark p {
+            color: var(--dark-secondary);
+        }
+        
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Dark Mode Toggle */
+        .mode-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--light-card);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .mode-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        body.dark .mode-toggle {
+            background: var(--dark-card);
+        }
+        
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing);
+            margin: var(--spacing) 0;
+        }
+        
+        .feature {
+            background: rgba(67, 97, 238, 0.1);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--light-accent);
+        }
+        
+        body.dark .feature {
+            background: rgba(72, 149, 239, 0.1);
+            border-left-color: var(--dark-accent);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: var(--spacing) 0;
+            margin-top: var(--spacing);
+            color: var(--light-secondary);
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        body.dark footer {
+            color: var(--dark-secondary);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            iframe {
+                height: 400px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <button class="mode-toggle" onclick="toggleMode()">🌙 Dark Mode</button>
+    <button class="mode-toggle" onclick="toggleMode()">🌙</button>
     
     <header>
-        <h1>My TurboWarp Game</h1>
-        <p>A fun project created with TurboWarp</p>
+        <div class="container">
+            <h1>GALACTIC ADVENTURE</h1>
+            <p class="tagline">An intergalactic journey through space and time. Dodge asteroids, collect power-ups, and save the galaxy!</p>
+        </div>
     </header>
     
-    <main>
-        <div class="game-container">
+    <main class="container">
+        <section class="game-section">
             <iframe src="https://turbowarp.org/YOUR-PROJECT-ID/embed" allowfullscreen></iframe>
-        </div>
+        </section>
         
-        <div class="instructions">
-            <h3>How to Play</h3>
-            <p>Replace these instructions with your game's controls and rules.</p>
+        <section class="info-card">
+            <h2>How to Play</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3>Controls</h3>
+                    <ul>
+                        <li><strong>Arrow Keys</strong> - Move your spaceship</li>
+                        <li><strong>Spacebar</strong> - Fire lasers</li>
+                        <li><strong>P Key</strong> - Pause game</li>
+                    </ul>
+                </div>
+                <div class="feature">
+                    <h3>Objectives</h3>
+                    <ul>
+                        <li>Destroy enemy ships</li>
+                        <li>Collect energy crystals</li>
+                        <li>Avoid asteroid fields</li>
+                        <li>Reach the final boss</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section class="info-card">
+            <h2>About the Game</h2>
+            <p>Galactic Adventure is a space shooter game created using TurboWarp, a high-performance Scratch mod. This project was developed over 3 months with careful attention to game mechanics and visual design.</p>
+            
+            <h3>Features</h3>
+            <div class="features">
+                <div class="feature">
+                    <h4>Multiple Levels</h4>
+                    <p>Progress through 5 challenging space zones with unique enemies and obstacles.</p>
+                </div>
+                <div class="feature">
+                    <h4>Power-Ups</h4>
+                    <p>Collect special items to enhance your spaceship's abilities temporarily.</p>
+                </div>
+                <div class="feature">
+                    <h4>Boss Battles</h4>
+                    <p>Test your skills against massive enemy ships at the end of each zone.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="info-card">
+            <h2>Development Notes</h2>
+            <h3>Technologies Used</h3>
             <ul>
-                <li>Use arrow keys to move</li>
-                <li>Spacebar to jump</li>
-                <li>Avoid the obstacles</li>
+                <li>TurboWarp (Scratch mod)</li>
+                <li>Custom sprite designs</li>
+                <li>Original sound effects</li>
             </ul>
-        </div>
+            
+            <h3>Challenges Overcome</h3>
+            <p>The most difficult part was implementing the boss AI patterns while keeping the game performance smooth. Using TurboWarp's optimization features helped achieve consistent frame rates.</p>
+        </section>
         
-        <h2>About This Project</h2>
-        <p>This game was created using TurboWarp, a Scratch mod with faster execution. I built it to [explain your purpose].</p>
+        <section class="info-card">
+            <h2>Share Your Score!</h2>
+            <p>Enjoyed the game? Share your high score with friends:</p>
+            <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                <button style="padding: 0.5rem 1rem; background: #4267B2; color: white; border: none; border-radius: 4px;">Facebook</button>
+                <button style="padding: 0.5rem 1rem; background: #1DA1F2; color: white; border: none; border-radius: 4px;">Twitter</button>
+                <button style="padding: 0.5rem 1rem; background: #25D366; color: white; border: none; border-radius: 4px;">WhatsApp</button>
+            </div>
+        </section>
     </main>
+    
+    <footer class="container">
+        <p>Created with ♥ using TurboWarp | © 2023 Galactic Adventure</p>
+    </footer>
 
     <script>
         function toggleMode() {
@@ -127,11 +324,11 @@
             
             if (body.classList.contains('dark')) {
                 body.classList.remove('dark');
-                toggle.textContent = '🌙 Dark Mode';
+                toggle.textContent = '🌙';
                 localStorage.setItem('colorMode', 'light');
             } else {
                 body.classList.add('dark');
-                toggle.textContent = '☀️ Light Mode';
+                toggle.textContent = '☀️';
                 localStorage.setItem('colorMode', 'dark');
             }
         }
@@ -141,7 +338,7 @@
             (window.matchMedia('(prefers-color-scheme: dark)').matches && 
              localStorage.getItem('colorMode') !== 'light')) {
             document.body.classList.add('dark');
-            document.querySelector('.mode-toggle').textContent = '☀️ Light Mode';
+            document.querySelector('.mode-toggle').textContent = '☀️';
         }
     </script>
 </body>
