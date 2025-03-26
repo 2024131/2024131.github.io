@@ -1,3 +1,35 @@
-git add index.html
-git commit -m "Add minimal dark mode toggle"
-git push origin main
+echo '<!DOCTYPE html>
+<html>
+<head>
+    <title>My GitHub Page</title>
+    <meta charset="UTF-8">
+    <style>
+        body { 
+            font-family: monospace;
+            max-width: 60ch;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            color: black;
+        }
+        @media (prefers-color-scheme: dark) {
+            body { background: #111; color: #eee; }
+        }
+    </style>
+</head>
+<body>
+    <div onclick="this.parentElement.classList.toggle('dark');this.textContent=this.parentElement.classList.contains('dark')?'☀️ Light Mode':'🌙 Dark Mode'">🌙 Dark Mode</div>
+    <pre>
+Hello, World! 👋
+Welcome to my GitHub Pages site.
+
+My Projects
+-----------
+Project 1
+Description of my first project.
+
+Project 2
+Description of my second project.
+    </pre>
+</body>
+</html>' > index.html
