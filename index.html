@@ -4,51 +4,124 @@ cat << 'EOF' > index.html
 <head>
     <title>My GitHub Page</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        :root {
+            --light-bg: #fafafa;
+            --light-text: #333;
+            --light-accent: #4a6fa5;
+            --dark-bg: #1a1a1a;
+            --dark-text: #f0f0f0;
+            --dark-accent: #7ba2ff;
+            --spacing: 1.5rem;
+            --max-width: 65ch;
+        }
+        
         body {
-            font-family: monospace;
-            max-width: 60ch;
+            font-family: 'SF Mono', 'Menlo', monospace;
+            line-height: 1.6;
+            max-width: var(--max-width);
             margin: 0 auto;
-            padding: 2rem;
-            --bg-color: white;
-            --text-color: black;
-            background: var(--bg-color);
-            color: var(--text-color);
-            transition: background 0.3s, color 0.3s;
+            padding: var(--spacing);
+            background: var(--light-bg);
+            color: var(--light-text);
+            transition: all 0.3s ease;
         }
+        
         body.dark {
-            --bg-color: #111;
-            --text-color: #eee;
+            background: var(--dark-bg);
+            color: var(--dark-text);
         }
-        @media (prefers-color-scheme: dark) {
-            body:not(.light) {
-                --bg-color: #111;
-                --text-color: #eee;
-            }
-        }
+        
         .mode-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
             cursor: pointer;
-            margin-bottom: 1rem;
+            background: transparent;
+            border: 1px solid;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
         }
-        pre {
-            white-space: pre-wrap;
+        
+        .mode-toggle:hover {
+            transform: scale(1.05);
+        }
+        
+        body .mode-toggle {
+            border-color: var(--light-accent);
+            color: var(--light-accent);
+        }
+        
+        body.dark .mode-toggle {
+            border-color: var(--dark-accent);
+            color: var(--dark-accent);
+        }
+        
+        h1 {
+            color: var(--light-accent);
+            margin-bottom: var(--spacing);
+            font-weight: 500;
+        }
+        
+        body.dark h1 {
+            color: var(--dark-accent);
+        }
+        
+        .project {
+            margin-bottom: var(--spacing);
+            padding-bottom: var(--spacing);
+            border-bottom: 1px dashed;
+        }
+        
+        body .project {
+            border-color: rgba(0,0,0,0.1);
+        }
+        
+        body.dark .project {
+            border-color: rgba(255,255,255,0.1);
+        }
+        
+        a {
+            color: var(--light-accent);
+            text-decoration: none;
+            border-bottom: 1px dotted;
+        }
+        
+        body.dark a {
+            color: var(--dark-accent);
+        }
+        
+        a:hover {
+            border-bottom-style: solid;
+        }
+        
+        @media (max-width: 768px) {
+            :root {
+                --spacing: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="mode-toggle" onclick="toggleMode()">🌙 Dark Mode</div>
-    <pre>
-Hello, World! 👋
-Welcome to my GitHub Pages site.
-
-My Projects
------------
-Project 1
-Description of my first project.
-
-Project 2
-Description of my second project.
-    </pre>
+    <button class="mode-toggle" onclick="toggleMode()">🌙 Dark Mode</button>
+    
+    <h1>Hello, World! 👋</h1>
+    <p>Welcome to my GitHub Pages site.</p>
+    
+    <h2>My Projects</h2>
+    
+    <div class="project">
+        <h3>Project 1</h3>
+        <p>Description of my first project. <a href="#">View project</a></p>
+    </div>
+    
+    <div class="project">
+        <h3>Project 2</h3>
+        <p>Description of my second project. <a href="#">View project</a></p>
+    </div>
 
     <script>
         function toggleMode() {
@@ -57,31 +130,22 @@ Description of my second project.
             
             if (body.classList.contains('dark')) {
                 body.classList.remove('dark');
-                body.classList.add('light');
                 toggle.textContent = '🌙 Dark Mode';
+                localStorage.setItem('colorMode', 'light');
             } else {
-                body.classList.remove('light');
                 body.classList.add('dark');
                 toggle.textContent = '☀️ Light Mode';
+                localStorage.setItem('colorMode', 'dark');
             }
-            
-            // Save preference
-            localStorage.setItem('colorMode', body.classList.contains('dark') ? 'dark' : 'light');
         }
 
-        // Initialize from saved preference or system preference
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedMode = localStorage.getItem('colorMode');
-            const toggle = document.querySelector('.mode-toggle');
-            
-            if (savedMode === 'dark') {
-                document.body.classList.add('dark');
-                toggle.textContent = '☀️ Light Mode';
-            } else if (savedMode === 'light') {
-                document.body.classList.add('light');
-                toggle.textContent = '🌙 Dark Mode';
-            }
-        });
+        // Initialize
+        if (localStorage.getItem('colorMode') === 'dark' || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches && 
+             localStorage.getItem('colorMode') !== 'light')) {
+            document.body.classList.add('dark');
+            document.querySelector('.mode-toggle').textContent = '☀️ Light Mode';
+        }
     </script>
 </body>
 </html>
