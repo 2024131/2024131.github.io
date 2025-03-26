@@ -1,24 +1,42 @@
+cat << 'EOF' > index.html
 <!DOCTYPE html>
 <html>
 <head>
     <title>My GitHub Page</title>
     <meta charset="UTF-8">
     <style>
-        body { 
+        body {
             font-family: monospace;
             max-width: 60ch;
             margin: 0 auto;
             padding: 2rem;
-            background: white;
-            color: black;
+            --bg-color: white;
+            --text-color: black;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background 0.3s, color 0.3s;
+        }
+        body.dark {
+            --bg-color: #111;
+            --text-color: #eee;
         }
         @media (prefers-color-scheme: dark) {
-            body { background: #111; color: #eee; }
+            body:not(.light) {
+                --bg-color: #111;
+                --text-color: #eee;
+            }
+        }
+        .mode-toggle {
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        pre {
+            white-space: pre-wrap;
         }
     </style>
 </head>
 <body>
-    <div onclick="this.parentElement.classList.toggle('dark');this.textContent=this.parentElement.classList.contains('dark')?'☀️ Light Mode':'🌙 Dark Mode'">🌙 Dark Mode</div>
+    <div class="mode-toggle" onclick="toggleMode()">🌙 Dark Mode</div>
     <pre>
 Hello, World! 👋
 Welcome to my GitHub Pages site.
@@ -31,5 +49,40 @@ Description of my first project.
 Project 2
 Description of my second project.
     </pre>
+
+    <script>
+        function toggleMode() {
+            const body = document.body;
+            const toggle = document.querySelector('.mode-toggle');
+            
+            if (body.classList.contains('dark')) {
+                body.classList.remove('dark');
+                body.classList.add('light');
+                toggle.textContent = '🌙 Dark Mode';
+            } else {
+                body.classList.remove('light');
+                body.classList.add('dark');
+                toggle.textContent = '☀️ Light Mode';
+            }
+            
+            // Save preference
+            localStorage.setItem('colorMode', body.classList.contains('dark') ? 'dark' : 'light');
+        }
+
+        // Initialize from saved preference or system preference
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedMode = localStorage.getItem('colorMode');
+            const toggle = document.querySelector('.mode-toggle');
+            
+            if (savedMode === 'dark') {
+                document.body.classList.add('dark');
+                toggle.textContent = '☀️ Light Mode';
+            } else if (savedMode === 'light') {
+                document.body.classList.add('light');
+                toggle.textContent = '🌙 Dark Mode';
+            }
+        });
+    </script>
 </body>
-</html index.html>
+</html>
+EOF
