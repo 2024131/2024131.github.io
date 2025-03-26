@@ -11,27 +11,67 @@ echo '<!DOCTYPE html>
             margin: 0 auto;
             padding: 20px;
             line-height: 1.6;
+            background: white;
+            color: black;
+            transition: all 0.3s ease;
         }
-        .project {
-            margin-bottom: 20px;
-            padding: 15px;
-            border-left: 3px solid #2ecc71;
-            background-color: #f9f9f9;
+        body.dark-mode {
+            background: #121212;
+            color: #f1f1f1;
+        }
+        .dark-mode-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #ddd;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .dark-mode .dark-mode-toggle {
+            background: #333;
+            color: white;
+        }
+        pre {
+            white-space: pre-wrap;
+            font-family: Arial, sans-serif;
         }
     </style>
 </head>
 <body>
-    <h1>Hello, World! 👋</h1>
-    <p>Welcome to my GitHub Pages site.</p>
-    
-    <h2>My Projects</h2>
-    <div class="project">
-        <h3>Project 1</h3>
-        <p>Description of my first project.</p>
-    </div>
-    <div class="project">
-        <h3>Project 2</h3>
-        <p>Description of my second project.</p>
-    </div>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+    <pre>
+Hello, World! 👋
+Welcome to my GitHub Pages site.
+
+My Projects
+-----------
+Project 1
+Description of my first project.
+
+Project 2
+Description of my second project.
+    </pre>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const button = document.querySelector('.dark-mode-toggle');
+            if (document.body.classList.contains('dark-mode')) {
+                button.textContent = '☀️ Light Mode';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                button.textContent = '🌙 Dark Mode';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        // Check for saved preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.dark-mode-toggle').textContent = '☀️ Light Mode';
+        }
+    </script>
 </body>
 </html>' > index.html
