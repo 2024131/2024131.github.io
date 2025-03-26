@@ -3,155 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My TurboWarp Project</title>
-    <style>
-        :root {
-            --light-bg: #f8f9fa;
-            --light-text: #212529;
-            --light-accent: #4361ee;
-            --dark-bg: #121212;
-            --dark-text: #e9ecef;
-            --dark-accent: #4895ef;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: var(--light-bg);
-            color: var(--light-text);
-            transition: all 0.3s ease;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        body.dark {
-            background: var(--dark-bg);
-            color: var(--dark-text);
-        }
-        
-        header {
-            padding: 1rem;
-            text-align: center;
-        }
-        
-        h1 {
-            color: var(--light-accent);
-            margin: 0;
-            font-size: 1.5rem;
-        }
-        
-        body.dark h1 {
-            color: var(--dark-accent);
-        }
-        
-        .container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-        }
-        
-        iframe {
-            width: 100%;
-            max-width: 800px;
-            height: 600px;
-            border: none;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        body.dark iframe {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-        
-        .mode-toggle {
-            position: fixed;
-            bottom: 1rem;
-            right: 1rem;
-            background: var(--light-bg);
-            border: 1px solid var(--light-accent);
-            color: var(--light-accent);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-        }
-        
-        body.dark .mode-toggle {
-            background: var(--dark-bg);
-            border-color: var(--dark-accent);
-            color: var(--dark-accent);
-        }
-        
-        .mode-toggle:hover {
-            transform: translateY(-2px);
-        }
-        
-        footer {
-            text-align: center;
-            padding: 1rem;
-            font-size: 0.8rem;
-            color: var(--light-text);
-            opacity: 0.7;
-        }
-        
-        body.dark footer {
-            color: var(--dark-text);
-        }
-        
-        @media (max-width: 768px) {
-            iframe {
-                height: 400px;
-            }
-            
-            h1 {
-                font-size: 1.2rem;
-            }
-        }
-    </style>
+    <title>TurboWarp Project</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
-        <h1>My TurboWarp Project</h1>
+        <h1>My TurboWarp Creation</h1>
     </header>
     
-    <div class="container">
+    <main>
         <iframe src="https://turbowarp.org/YOUR-PROJECT-ID/embed" allowfullscreen></iframe>
-    </div>
-    
-    <button class="mode-toggle" onclick="toggleMode()">🌙 Dark Mode</button>
+    </main>
+
+    <button id="modeToggle">🌙 Dark Mode</button>
     
     <footer>
-        Created with TurboWarp
+        Made with ♥ using TurboWarp
     </footer>
 
-    <script>
-        function toggleMode() {
-            const body = document.body;
-            const toggle = document.querySelector('.mode-toggle');
-            
-            if (body.classList.contains('dark')) {
-                body.classList.remove('dark');
-                toggle.textContent = '🌙 Dark Mode';
-                localStorage.setItem('colorMode', 'light');
-            } else {
-                body.classList.add('dark');
-                toggle.textContent = '☀️ Light Mode';
-                localStorage.setItem('colorMode', 'dark');
-            }
-        }
-
-        // Initialize dark mode if preferred
-        if (localStorage.getItem('colorMode') === 'dark' || 
-            (window.matchMedia('(prefers-color-scheme: dark)').matches && 
-             localStorage.getItem('colorMode') !== 'light')) {
-            document.body.classList.add('dark');
-            document.querySelector('.mode-toggle').textContent = '☀️ Light Mode';
-        }
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
