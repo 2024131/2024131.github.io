@@ -1,16 +1,34 @@
-echo '// Sample projects data
-const projects = [
-    { name: "Project 1", url: "#", description: "A cool project." },
-    { name: "Project 2", url: "#", description: "Another awesome project." }
-];
-
-// Render projects
-const projectList = document.querySelector(".project-list");
-projects.forEach(project => {
-    projectList.innerHTML += `
-        <div class="project">
-            <h3><a href="${project.url}">${project.name}</a></h3>
-            <p>${project.description}</p>
-        </div>
-    `;
-});' > js/main.js
+document.addEventListener('DOMContentLoaded', () => {
+    const modeToggle = document.getElementById('modeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedMode = localStorage.getItem('colorMode');
+    
+    // Initialize mode
+    if (savedMode === 'dark' || (prefersDark && savedMode !== 'light')) {
+        enableDarkMode();
+    }
+    
+    // Toggle handler
+    modeToggle.addEventListener('click', () => {
+        document.body.classList.contains('dark') ? disableDarkMode() : enableDarkMode();
+    });
+    
+    function enableDarkMode() {
+        document.body.classList.add('dark');
+        modeToggle.innerHTML = '☀️ Light Mode';
+        localStorage.setItem('colorMode', 'dark');
+    }
+    
+    function disableDarkMode() {
+        document.body.classList.remove('dark');
+        modeToggle.innerHTML = '🌙 Dark Mode';
+        localStorage.setItem('colorMode', 'light');
+    }
+    
+    // System preference change listener
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (localStorage.getItem('colorMode') === null) {
+            e.matches ? enableDarkMode() : disableDarkMode();
+        }
+    });
+});
