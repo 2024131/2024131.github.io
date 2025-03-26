@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Set current year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Set current date
+    const now = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', options);
     
     // Dark mode functionality
     const modeToggle = document.getElementById('modeToggle');
@@ -22,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Create floating stars
-    createFloatingStars();
+    // Create animated particles
+    createParticles();
     
     function toggleMode() {
         document.body.classList.contains('dark') ? disableDarkMode() : enableDarkMode();
@@ -31,51 +33,50 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function enableDarkMode() {
         document.body.classList.add('dark');
-        modeToggle.innerHTML = '<span class="mode-icon">☀️</span><span class="mode-text">Light Mode</span>';
+        modeToggle.innerHTML = '<i class="fas fa-sun mode-icon"></i><span class="mode-text">Light Mode</span>';
         localStorage.setItem('colorMode', 'dark');
-        
-        // Enhance dark mode transition
-        document.documentElement.style.setProperty('--glass-blur', 'blur(20px)');
-        setTimeout(() => {
-            document.documentElement.style.setProperty('--glass-blur', 'blur(16px)');
-        }, 300);
+        animateModeTransition();
     }
     
     function disableDarkMode() {
         document.body.classList.remove('dark');
-        modeToggle.innerHTML = '<span class="mode-icon">🌙</span><span class="mode-text">Dark Mode</span>';
+        modeToggle.innerHTML = '<i class="fas fa-moon mode-icon"></i><span class="mode-text">Dark Mode</span>';
         localStorage.setItem('colorMode', 'light');
-        
-        // Enhance light mode transition
-        document.documentElement.style.setProperty('--glass-blur', 'blur(12px)');
+        animateModeTransition();
+    }
+    
+    function animateModeTransition() {
+        document.documentElement.style.setProperty('--glass-blur', 'blur(20px)');
         setTimeout(() => {
-            document.documentElement.style.setProperty('--glass-blur', 'blur(16px)');
+            document.documentElement.style.setProperty('--glass-blur', 'blur(12px)');
         }, 300);
     }
     
-    function createFloatingStars() {
-        const starsContainer = document.querySelector('.stars');
-        const starCount = 50;
+    function createParticles() {
+        const particlesContainer = document.querySelector('.particles');
+        const particleCount = 30;
         
-        for (let i = 0; i < starCount; i++) {
-            const star = document.createElement('div');
-            star.className = 'floating-star';
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
             
             // Random properties
             const size = Math.random() * 3 + 1;
             const posX = Math.random() * 100;
             const posY = Math.random() * 100;
             const delay = Math.random() * 5;
-            const duration = Math.random() * 10 + 10;
+            const duration = Math.random() * 15 + 10;
+            const opacity = Math.random() * 0.5 + 0.1;
             
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-            star.style.left = `${posX}%`;
-            star.style.top = `${posY}%`;
-            star.style.animationDelay = `${delay}s`;
-            star.style.animationDuration = `${duration}s`;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${posX}%`;
+            particle.style.top = `${posY}%`;
+            particle.style.animationDelay = `${delay}s`;
+            particle.style.animationDuration = `${duration}s`;
+            particle.style.opacity = opacity;
             
-            starsContainer.appendChild(star);
+            particlesContainer.appendChild(particle);
         }
     }
 });
