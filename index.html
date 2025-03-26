@@ -3,92 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galactic Explorer | TurboWarp Project</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Roboto+Mono&display=swap">
+    <title>My TurboWarp Projects</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="stars"></div>
+    <div class="particles"></div>
+    
     <div class="container">
         <header class="hero">
-            <div class="hero-content">
-                <h1 class="title-gradient">Galactic Explorer</h1>
-                <p class="subtitle">Journey through the cosmos in this TurboWarp adventure</p>
-                <div class="badges">
-                    <span class="badge"><i class="fas fa-rocket"></i> Interactive</span>
-                    <span class="badge"><i class="fas fa-code"></i> TurboWarp</span>
-                </div>
-            </div>
+            <h1 class="hero-title">My <span class="highlight">TurboWarp</span> Portfolio</h1>
+            <p class="hero-subtitle">Interactive projects built with Scratch's powerful fork</p>
         </header>
-        
+
         <main>
-            <section class="game-section glass-card">
-                <div class="iframe-container">
-                    <iframe src="https://turbowarp.org/YOUR-PROJECT-ID/embed" allowfullscreen></iframe>
-                </div>
+            <section class="projects-grid">
+                <!-- Project 1 -->
+                <article class="project-card" data-category="game">
+                    <div class="project-media">
+                        <iframe src="https://turbowarp.org/PROJECT-1-ID/embed" allowfullscreen></iframe>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-badges">
+                            <span class="badge game-badge">Game</span>
+                            <span class="badge level-badge">Intermediate</span>
+                        </div>
+                        <h2>Galactic Explorer</h2>
+                        <p>Navigate through asteroid fields and collect stardust in this space adventure.</p>
+                        <div class="project-stats">
+                            <span><i class="fas fa-code-branch"></i> 42 scripts</span>
+                            <span><i class="fas fa-paint-brush"></i> Custom assets</span>
+                        </div>
+                        <a href="https://turbowarp.org/PROJECT-1-ID/fullscreen" class="project-button" target="_blank">
+                            Play Fullscreen <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Project 2 -->
+                <article class="project-card" data-category="simulation">
+                    <div class="project-media">
+                        <iframe src="https://turbowarp.org/PROJECT-2-ID/embed" allowfullscreen></iframe>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-badges">
+                            <span class="badge sim-badge">Simulation</span>
+                            <span class="badge level-badge">Advanced</span>
+                        </div>
+                        <h2>Ecosystem Simulator</h2>
+                        <p>Watch predator-prey dynamics unfold in this biological simulation.</p>
+                        <div class="project-stats">
+                            <span><i class="fas fa-code-branch"></i> 78 scripts</span>
+                            <span><i class="fas fa-chart-line"></i> Data tracking</span>
+                        </div>
+                        <a href="https://turbowarp.org/PROJECT-2-ID/fullscreen" class="project-button" target="_blank">
+                            Explore Fullscreen <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Project 3 -->
+                <article class="project-card" data-category="art">
+                    <div class="project-media">
+                        <iframe src="https://turbowarp.org/PROJECT-3-ID/embed" allowfullscreen></iframe>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-badges">
+                            <span class="badge art-badge">Digital Art</span>
+                            <span class="badge level-badge">Beginner</span>
+                        </div>
+                        <h2>Generative Canvas</h2>
+                        <p>Interactive art piece that evolves based on user input.</p>
+                        <div class="project-stats">
+                            <span><i class="fas fa-code-branch"></i> 23 scripts</span>
+                            <span><i class="fas fa-palette"></i> Color theory</span>
+                        </div>
+                        <a href="https://turbowarp.org/PROJECT-3-ID/fullscreen" class="project-button" target="_blank">
+                            Create Fullscreen <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </article>
             </section>
-            
-            <section class="info-section">
-                <article class="glass-card">
-                    <h2><i class="fas fa-info-circle"></i> About This Project</h2>
-                    <p>Embark on an interstellar journey with Galactic Explorer, built using TurboWarp's enhanced performance engine. This project demonstrates advanced Scratch programming techniques with optimized execution.</p>
-                    
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <i class="fas fa-star"></i>
-                            <h3>Dynamic Gameplay</h3>
-                            <p>Smooth 60FPS performance even with complex sprite interactions</p>
-                        </div>
-                        <div class="feature-card">
-                            <i class="fas fa-cogs"></i>
-                            <h3>Advanced Physics</h3>
-                            <p>Realistic gravity and collision systems implemented</p>
-                        </div>
-                        <div class="feature-card">
-                            <i class="fas fa-palette"></i>
-                            <h3>Custom Assets</h3>
-                            <p>Original sprite designs and sound effects</p>
-                        </div>
-                    </div>
-                </article>
+
+            <section class="info-section glass-card">
+                <h2><i class="fas fa-lightbulb"></i> About These Projects</h2>
+                <p>All projects are powered by TurboWarp, which compiles Scratch projects to JavaScript for improved performance. While this page supports dark mode, individual projects maintain their original color schemes because:</p>
                 
-                <article class="glass-card dark-mode-info">
-                    <h2><i class="fas fa-moon"></i> Dark Mode Notice</h2>
-                    <div class="info-content">
-                        <div class="icon-box">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div>
-                            <p>While this page supports dark mode, the embedded TurboWarp project runs independently and maintains its original colors. This is because:</p>
-                            <ul class="styled-list">
-                                <li><i class="fas fa-lock"></i> TurboWarp projects are sandboxed in secure iframes</li>
-                                <li><i class="fas fa-paint-brush"></i> Visual styling is controlled internally by the project</li>
-                                <li><i class="fas fa-code"></i> Dark mode would need custom implementation within the project</li>
-                            </ul>
-                        </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Security Sandbox</h3>
+                        <p>Projects run in isolated iframes for safety</p>
                     </div>
-                </article>
+                    <div class="feature-card">
+                        <i class="fas fa-paint-roller"></i>
+                        <h3>Original Design</h3>
+                        <p>Visual styling is controlled within each project</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-tools"></i>
+                        <h3>Custom Implementation</h3>
+                        <p>Dark mode would need to be built into each project</p>
+                    </div>
+                </div>
             </section>
         </main>
-        
-        <footer class="footer">
+
+        <footer>
             <div class="footer-content">
                 <div class="social-links">
                     <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="Scratch"><i class="fab fa-codepen"></i></a>
                     <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                 </div>
-                <p>Created with <i class="fas fa-heart"></i> using TurboWarp • <span id="year"></span></p>
+                <p>Created with <i class="fas fa-heart"></i> using TurboWarp • Updated <span id="current-date"></span></p>
             </div>
         </footer>
     </div>
-    
+
     <button id="modeToggle" aria-label="Toggle dark mode">
-        <span class="mode-icon">🌙</span>
+        <i class="fas fa-moon mode-icon"></i>
         <span class="mode-text">Dark Mode</span>
     </button>
-    
+
     <script src="js/main.js"></script>
 </body>
 </html>
