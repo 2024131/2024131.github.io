@@ -3,6 +3,7 @@ echo '<!DOCTYPE html>
 <head>
     <title>My GitHub Page</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,6 +12,12 @@ echo '<!DOCTYPE html>
             padding: 20px;
             line-height: 1.6;
         }
+        .project {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-left: 3px solid #2ecc71;
+            background-color: #f9f9f9;
+        }
     </style>
 </head>
 <body>
@@ -18,6 +25,13 @@ echo '<!DOCTYPE html>
     <p>Welcome to my GitHub Pages site.</p>
     
     <h2>My Projects</h2>
-    <!-- Your projects will go here -->
+    <div class="project">
+        <h3>Project 1</h3>
+        <p>Description of my first project.</p>
+    </div>
+    <div class="project">
+        <h3>Project 2</h3>
+        <p>Description of my second project.</p>
+    </div>
 </body>
 </html>' > index.html
