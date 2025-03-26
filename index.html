@@ -3,23 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TurboWarp Project</title>
+    <title>My TurboWarp Project</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code&display=swap">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>My TurboWarp Creation</h1>
-    </header>
-    
-    <main>
-        <iframe src="https://turbowarp.org/YOUR-PROJECT-ID/embed" allowfullscreen></iframe>
-    </main>
-
-    <button id="modeToggle">🌙 Dark Mode</button>
-    
-    <footer>
-        Made with ♥ using TurboWarp
-    </footer>
+    <div class="container">
+        <header>
+            <h1>My TurboWarp Project</h1>
+            <p class="subtitle">An interactive creation</p>
+        </header>
+        
+        <main>
+            <div class="game-container">
+                <iframe src="https://turbowarp.org/YOUR-PROJECT-ID/embed" allowfullscreen></iframe>
+            </div>
+            
+            <div class="info-box">
+                <h2>About This Project</h2>
+                <p>This project was created using TurboWarp, a Scratch mod with enhanced performance features.</p>
+                
+                <div class="dark-mode-explanation">
+                    <h3>Why Dark Mode Doesn't Affect the Project</h3>
+                    <p>TurboWarp projects run in an isolated iframe and can't inherit the page's dark mode automatically. The project would need to implement its own dark mode internally.</p>
+                </div>
+            </div>
+        </main>
+        
+        <button id="modeToggle" aria-label="Dark mode toggle">🌙 Dark Mode</button>
+        
+        <footer>
+            <p>Created with TurboWarp • <span id="year"></span></p>
+        </footer>
+    </div>
 
     <script src="js/main.js"></script>
 </body>
