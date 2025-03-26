@@ -7,87 +7,150 @@ cat << 'EOF' > index.html
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
-            --light-bg: #fafafa;
-            --light-text: #333;
-            --light-accent: #4a6fa5;
-            --dark-bg: #1a1a1a;
-            --dark-text: #f0f0f0;
-            --dark-accent: #7ba2ff;
-            --spacing: 1.5rem;
-            --max-width: 65ch;
+            --light-bg: #f8f9fa;
+            --light-text: #212529;
+            --light-accent: #4361ee;
+            --light-secondary: #6c757d;
+            --dark-bg: #121212;
+            --dark-text: #e9ecef;
+            --dark-accent: #4895ef;
+            --dark-secondary: #adb5bd;
+            --spacing: 1.8rem;
+            --max-width: 70ch;
+            --border-radius: 8px;
+            --shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
         body {
-            font-family: 'SF Mono', 'Menlo', monospace;
-            line-height: 1.6;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
             max-width: var(--max-width);
             margin: 0 auto;
             padding: var(--spacing);
             background: var(--light-bg);
             color: var(--light-text);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         body.dark {
             background: var(--dark-bg);
             color: var(--dark-text);
+            --shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
         
         .mode-toggle {
             position: fixed;
-            top: 1rem;
-            right: 1rem;
+            top: 1.2rem;
+            right: 1.2rem;
             cursor: pointer;
-            background: transparent;
-            border: 1px solid;
-            border-radius: 4px;
-            padding: 0.25rem 0.5rem;
+            background: var(--light-bg);
+            border: 1px solid var(--light-accent);
+            border-radius: var(--border-radius);
+            padding: 0.4rem 0.8rem;
             font-size: 0.9rem;
-            transition: all 0.2s ease;
-        }
-        
-        .mode-toggle:hover {
-            transform: scale(1.05);
-        }
-        
-        body .mode-toggle {
-            border-color: var(--light-accent);
             color: var(--light-accent);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         body.dark .mode-toggle {
+            background: var(--dark-bg);
             border-color: var(--dark-accent);
             color: var(--dark-accent);
+        }
+        
+        .mode-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         
         h1 {
             color: var(--light-accent);
             margin-bottom: var(--spacing);
-            font-weight: 500;
+            font-weight: 700;
+            font-size: 2.2rem;
+            line-height: 1.2;
         }
         
         body.dark h1 {
             color: var(--dark-accent);
         }
         
-        .project {
-            margin-bottom: var(--spacing);
-            padding-bottom: var(--spacing);
-            border-bottom: 1px dashed;
+        h2 {
+            margin: 2.5rem 0 1.5rem;
+            font-weight: 600;
+            color: var(--light-text);
+            position: relative;
+            padding-bottom: 0.5rem;
         }
         
-        body .project {
-            border-color: rgba(0,0,0,0.1);
+        body.dark h2 {
+            color: var(--dark-text);
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 3rem;
+            height: 3px;
+            background: var(--light-accent);
+            border-radius: 3px;
+        }
+        
+        body.dark h2::after {
+            background: var(--dark-accent);
+        }
+        
+        .project {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            background: white;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
         body.dark .project {
-            border-color: rgba(255,255,255,0.1);
+            background: #1e1e1e;
+        }
+        
+        .project:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .project h3 {
+            margin-top: 0;
+            color: var(--light-accent);
+            font-weight: 600;
+        }
+        
+        body.dark .project h3 {
+            color: var(--dark-accent);
+        }
+        
+        .project p {
+            color: var(--light-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        body.dark .project p {
+            color: var(--dark-secondary);
         }
         
         a {
             color: var(--light-accent);
             text-decoration: none;
-            border-bottom: 1px dotted;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.2s ease;
         }
         
         body.dark a {
@@ -95,57 +158,95 @@ cat << 'EOF' > index.html
         }
         
         a:hover {
-            border-bottom-style: solid;
+            color: #3a56e8;
+            text-decoration: underline;
+        }
+        
+        body.dark a:hover {
+            color: #5fa4ff;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+            vertical-align: middle;
         }
         
         @media (max-width: 768px) {
             :root {
-                --spacing: 1rem;
+                --spacing: 1.2rem;
+                --max-width: 90%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
             }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <button class="mode-toggle" onclick="toggleMode()">🌙 Dark Mode</button>
+    <button class="mode-toggle" onclick="toggleMode()">
+        <span class="emoji">🌙</span> Dark Mode
+    </button>
     
-    <h1>Hello, World! 👋</h1>
-    <p>Welcome to my GitHub Pages site.</p>
+    <header>
+        <h1>Hello, World! <span class="emoji">👋</span></h1>
+        <p>Welcome to my GitHub Pages site. I'm building things and sharing my projects here.</p>
+    </header>
     
-    <h2>My Projects</h2>
-    
-    <div class="project">
-        <h3>Project 1</h3>
-        <p>Description of my first project. <a href="#">View project</a></p>
-    </div>
-    
-    <div class="project">
-        <h3>Project 2</h3>
-        <p>Description of my second project. <a href="#">View project</a></p>
-    </div>
+    <main>
+        <h2>My Projects</h2>
+        
+        <div class="project">
+            <h3>Project 1</h3>
+            <p>A clean, efficient solution for modern web development challenges. Built with cutting-edge technologies.</p>
+            <a href="#">
+                View project
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+        
+        <div class="project">
+            <h3>Project 2</h3>
+            <p>An innovative approach to data visualization that makes complex information accessible and beautiful.</p>
+            <a href="#">
+                View project
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+    </main>
 
     <script>
         function toggleMode() {
             const body = document.body;
             const toggle = document.querySelector('.mode-toggle');
+            const emoji = toggle.querySelector('.emoji');
             
             if (body.classList.contains('dark')) {
                 body.classList.remove('dark');
-                toggle.textContent = '🌙 Dark Mode';
+                toggle.innerHTML = '<span class="emoji">🌙</span> Dark Mode';
                 localStorage.setItem('colorMode', 'light');
             } else {
                 body.classList.add('dark');
-                toggle.textContent = '☀️ Light Mode';
+                toggle.innerHTML = '<span class="emoji">☀️</span> Light Mode';
                 localStorage.setItem('colorMode', 'dark');
             }
         }
 
         // Initialize
-        if (localStorage.getItem('colorMode') === 'dark' || 
-            (window.matchMedia('(prefers-color-scheme: dark)').matches && 
-             localStorage.getItem('colorMode') !== 'light')) {
-            document.body.classList.add('dark');
-            document.querySelector('.mode-toggle').textContent = '☀️ Light Mode';
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const savedMode = localStorage.getItem('colorMode');
+            
+            if (savedMode === 'dark' || (prefersDark && savedMode !== 'light')) {
+                document.body.classList.add('dark');
+                document.querySelector('.mode-toggle').innerHTML = '<span class="emoji">☀️</span> Light Mode';
+            }
+        });
     </script>
 </body>
 </html>
