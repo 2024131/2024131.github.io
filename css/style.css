@@ -1,24 +1,33 @@
 :root {
-    --light-bg: #f8f9fa;
-    --light-text: #212529;
-    --light-accent: #4361ee;
+    /* Light Theme */
+    --light-bg: #f5f7fa;
+    --light-text: #2d3748;
+    --light-accent: #4f46e5;
     --light-card: #ffffff;
-    --dark-bg: #121212;
-    --dark-text: #e9ecef;
-    --dark-accent: #4895ef;
-    --dark-card: #1e1e1e;
+    --light-border: #e2e8f0;
+    
+    /* Dark Theme */
+    --dark-bg: #1a202c;
+    --dark-text: #f7fafc;
+    --dark-accent: #7f9cf5;
+    --dark-card: #2d3748;
+    --dark-border: #4a5568;
+    
+    /* Shared */
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --radius: 12px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Inter', sans-serif;
     background: var(--light-bg);
     color: var(--light-text);
-    transition: background 0.4s, color 0.4s;
+    margin: 0;
+    padding: 0;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    transition: var(--transition);
 }
 
 body.dark {
@@ -26,55 +35,100 @@ body.dark {
     color: var(--dark-text);
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 header {
-    padding: 2rem 1rem;
     text-align: center;
+    margin-bottom: 2rem;
 }
 
 h1 {
+    font-size: 2.5rem;
     color: var(--light-accent);
-    margin: 0;
-    font-size: clamp(1.5rem, 4vw, 2rem);
+    margin-bottom: 0.5rem;
 }
 
 body.dark h1 {
     color: var(--dark-accent);
 }
 
-main {
-    flex: 1;
-    display: grid;
-    place-items: center;
-    padding: 1rem;
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin-top: 0;
+}
+
+.game-container {
+    background: var(--light-card);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+    transition: var(--transition);
+}
+
+body.dark .game-container {
+    background: var(--dark-card);
+    box-shadow: var(--shadow-lg);
 }
 
 iframe {
-    width: min(100%, 800px);
+    width: 100%;
     height: 600px;
     border: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border-radius: var(--radius);
 }
 
-body.dark iframe {
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+.info-box {
+    background: var(--light-card);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+body.dark .info-box {
+    background: var(--dark-card);
+    box-shadow: var(--shadow-lg);
+}
+
+.dark-mode-explanation {
+    background: rgba(79, 70, 229, 0.05);
+    border-left: 4px solid var(--light-accent);
+    padding: 1rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin-top: 1.5rem;
+}
+
+body.dark .dark-mode-explanation {
+    background: rgba(127, 156, 245, 0.05);
+    border-left-color: var(--dark-accent);
 }
 
 #modeToggle {
     position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
+    bottom: 2rem;
+    right: 2rem;
     background: var(--light-card);
     border: 1px solid var(--light-accent);
     color: var(--light-accent);
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem;
     border-radius: 50px;
     cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    font-weight: 600;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    z-index: 10;
 }
 
 body.dark #modeToggle {
@@ -84,23 +138,23 @@ body.dark #modeToggle {
 }
 
 #modeToggle:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }
 
 footer {
     text-align: center;
-    padding: 1.5rem;
+    margin-top: auto;
+    padding-top: 2rem;
+    opacity: 0.7;
     font-size: 0.9rem;
-    color: var(--light-text);
-    opacity: 0.8;
-}
-
-body.dark footer {
-    color: var(--dark-text);
 }
 
 @media (max-width: 768px) {
+    .container {
+        padding: 1.5rem;
+    }
+    
     iframe {
         height: 400px;
     }
@@ -108,7 +162,6 @@ body.dark footer {
     #modeToggle {
         bottom: 1rem;
         right: 1rem;
-        padding: 0.4rem 0.8rem;
-        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
     }
 }
