@@ -6,7 +6,7 @@
     <title>My TurboWarp Project</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
@@ -14,6 +14,7 @@
         }
         .project-container {
             margin: 30px 0;
+            position: relative;
         }
         iframe {
             width: 100%;
@@ -22,14 +23,25 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        .download-btn {
-            display: inline-block;
+        .fallback {
+            display: none;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
             margin-top: 20px;
+        }
+        .btn {
+            display: inline-block;
             padding: 10px 20px;
-            background: #4CAF50;
+            margin: 10px;
+            background: #4a6fa5;
             color: white;
             text-decoration: none;
             border-radius: 4px;
+        }
+        .loading {
+            padding: 20px;
+            font-style: italic;
         }
     </style>
 </head>
@@ -37,38 +49,56 @@
     <h1>My TurboWarp Project</h1>
     
     <div class="project-container">
-        <!-- Method 1: Direct Embed -->
-        <iframe src="https://turbowarp.org/1UCGkt9_NIFF8GrAJv9IK7kvocwzfNbsS/embed" allowfullscreen></iframe>
+        <div class="loading">Loading project...</div>
         
-        <!-- Fallback Method -->
-        <div id="fallback-message" style="display: none;">
-            <p>Project couldn't load. Please try:</p>
-            <a href="https://turbowarp.org/1UCGkt9_NIFF8GrAJv9IK7kvocwzfNbsS" class="download-btn" target="_blank">
-                Open on TurboWarp
+        <!-- Method 1: Direct Google Drive embed -->
+        <iframe id="projectFrame" 
+                src="https://turbowarp.org/editor?project_url=https://drive.google.com/uc?export=download&id=1UCGkt9_NIFF8GrAJv9IK7kvocwzfNbsS" 
+                allowfullscreen
+                style="display: none;"></iframe>
+        
+        <!-- Fallback options -->
+        <div class="fallback" id="fallback">
+            <p>Couldn't load project directly. Try these options:</p>
+            <a href="https://turbowarp.org/editor?project_url=https://drive.google.com/uc?export=download&id=1UCGkt9_NIFF8GrAJv9IK7kvocwzfNbsS" 
+               class="btn" target="_blank">
+                Open in TurboWarp
             </a>
-            <p>or</p>
-            <a href="https://drive.google.com/file/d/1UCGkt9_NIFF8GrAJv9IK7kvocwzfNbsS/view" class="download-btn" target="_blank">
+            <a href="https://drive.google.com/file/d/1UCGkt9_NIFF8GrAJv9IK7kvocwzfNbsS/view" 
+               class="btn" target="_blank">
                 Download Project File
             </a>
         </div>
     </div>
 
     <script>
-        // Check if iframe loaded successfully
-        window.addEventListener('load', function() {
-            const iframe = document.querySelector('iframe');
-            iframe.onerror = function() {
-                iframe.style.display = 'none';
-                document.getElementById('fallback-message').style.display = 'block';
+        document.addEventListener('DOMContentLoaded', function() {
+            const iframe = document.getElementById('projectFrame');
+            const loading = document.querySelector('.loading');
+            const fallback = document.getElementById('fallback');
+            
+            // First check if iframe loads
+            iframe.onload = function() {
+                loading.style.display = 'none';
+                iframe.style.display = 'block';
             };
             
-            // Additional check after 3 seconds
+            iframe.onerror = function() {
+                showFallback();
+            };
+            
+            // Fallback in case the iframe doesn't load
             setTimeout(function() {
-                if (iframe.contentDocument && iframe.contentDocument.body.innerHTML === '') {
-                    iframe.style.display = 'none';
-                    document.getElementById('fallback-message').style.display = 'block';
+                if (loading.style.display !== 'none') {
+                    showFallback();
                 }
-            }, 3000);
+            }, 5000);
+            
+            function showFallback() {
+                loading.style.display = 'none';
+                iframe.style.display = 'none';
+                fallback.style.display = 'block';
+            }
         });
     </script>
 </body>
