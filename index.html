@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon TurboWarp Viewer</title>
-    <meta name="description" content="A sleek viewer for TurboWarp and Scratch projects">
+    <title>LYT TurboWarp Project</title>
+    <meta name="description" content="Enhanced TurboWarp and Scratch project viewer with LYT design">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Favicon -->
@@ -21,30 +21,45 @@
 <body>
     <div class="particle-canvas" id="particles"></div>
     <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
     
     <div class="container">
         <header class="header">
             <div class="logo">
-                <span class="logo-icon"><i class="fas fa-code"></i></span>
-                <h1>Turbo<span>View</span></h1>
+                <span class="logo-icon"><i class="fas fa-bolt"></i></span>
+                <h1>LYT <span>TurboWarp</span></h1>
             </div>
-            <p class="tagline">Next-gen Scratch Project Viewer</p>
+            <div class="header-controls">
+                <button id="themeToggle" class="btn icon" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="fullscreenBtn" class="btn icon" aria-label="Toggle fullscreen">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
         </header>
         
         <main class="main-content">
             <div class="project-controls">
                 <div class="input-group">
+                    <div class="input-prefix">
+                        <i class="fas fa-link"></i>
+                    </div>
                     <input type="text" id="projectIdInput" placeholder="Enter Project ID" value="96708264">
                     <button id="loadBtn" class="btn primary">
-                        <i class="fas fa-play"></i> Load
+                        <i class="fas fa-play"></i> <span class="btn-text">Load</span>
                     </button>
                 </div>
-                <div class="control-buttons">
-                    <button id="fullscreenBtn" class="btn outline">
-                        <i class="fas fa-expand"></i> Fullscreen
+                
+                <div class="preset-buttons">
+                    <button class="btn outline small preset-btn" data-id="96708264">
+                        <i class="fas fa-gamepad"></i> Paper Minecraft
                     </button>
-                    <button id="themeToggle" class="btn outline">
-                        <i class="fas fa-moon"></i> Theme
+                    <button class="btn outline small preset-btn" data-id="60917032">
+                        <i class="fas fa-ghost"></i> Geometry Dash
+                    </button>
+                    <button class="btn outline small preset-btn" data-id="537157934">
+                        <i class="fas fa-car"></i> Racing Game
                     </button>
                 </div>
             </div>
@@ -58,6 +73,9 @@
                             <div class="loader-circle"></div>
                         </div>
                         <h3>Initializing Project</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
                         <p class="loading-text">Loading assets</p>
                     </div>
                     
@@ -69,19 +87,19 @@
                     
                     <div class="error-state" id="error">
                         <div class="error-icon">
-                            <i class="fas fa-exclamation-triangle"></i>
+                            <i class="fas fa-unlink"></i>
                         </div>
                         <h3 class="error-title">Connection Failed</h3>
                         <p class="error-desc">We couldn't load the project. Please try:</p>
                         <div class="btn-group">
-                            <a href="#" id="retryBtn" class="btn primary">
-                                <i class="fas fa-sync-alt"></i> Retry
-                            </a>
+                            <button id="retryBtn" class="btn primary">
+                                <i class="fas fa-sync-alt"></i> <span>Retry</span>
+                            </button>
                             <a href="#" id="turbowarpBtn" class="btn outline" target="_blank">
-                                <i class="fas fa-external-link-alt"></i> Open in TurboWarp
+                                <i class="fas fa-external-link-alt"></i> <span>TurboWarp</span>
                             </a>
                             <a href="#" id="scratchBtn" class="btn outline" target="_blank">
-                                <i class="fas fa-codepen"></i> Open in Scratch
+                                <i class="fas fa-codepen"></i> <span>Scratch</span>
                             </a>
                         </div>
                     </div>
@@ -89,46 +107,72 @@
                 
                 <div class="project-info">
                     <div class="info-card">
-                        <h3><i class="fas fa-info-circle"></i> Project Info</h3>
+                        <h3><i class="fas fa-chart-bar"></i> Performance</h3>
                         <div class="info-content">
-                            <p><span>Status:</span> <span id="projectStatus">Not loaded</span></p>
-                            <p><span>ID:</span> <span id="projectIdDisplay">-</span></p>
-                            <p><span>Source:</span> <span id="projectSource">-</span></p>
+                            <div class="info-item">
+                                <span>Status:</span>
+                                <span id="projectStatus" class="status-badge loading">Loading</span>
+                            </div>
+                            <div class="info-item">
+                                <span>FPS:</span>
+                                <span id="projectFPS">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span>Load Time:</span>
+                                <span id="projectLoadTime">-</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="quick-links">
-                        <h3><i class="fas fa-rocket"></i> Quick Links</h3>
-                        <div class="links-grid">
-                            <a href="https://turbowarp.org" class="btn outline small" target="_blank">
-                                <i class="fas fa-bolt"></i> TurboWarp
-                            </a>
-                            <a href="https://scratch.mit.edu" class="btn outline small" target="_blank">
-                                <i class="fab fa-codepen"></i> Scratch
-                            </a>
-                            <a href="https://github.com" class="btn outline small" target="_blank">
-                                <i class="fab fa-github"></i> GitHub
-                            </a>
-                            <a href="https://turbowarp.org/editor" class="btn outline small" target="_blank">
-                                <i class="fas fa-edit"></i> Editor
-                            </a>
+                    <div class="info-card">
+                        <h3><i class="fas fa-info-circle"></i> Project Info</h3>
+                        <div class="info-content">
+                            <div class="info-item">
+                                <span>ID:</span>
+                                <span id="projectIdDisplay" class="mono">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span>Source:</span>
+                                <span id="projectSource">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span>Last Loaded:</span>
+                                <span id="projectTimestamp">-</span>
+                            </div>
                         </div>
+                    </div>
+                    
+                    <div class="quick-actions">
+                        <button id="screenshotBtn" class="btn outline small">
+                            <i class="fas fa-camera"></i> Screenshot
+                        </button>
+                        <button id="reloadBtn" class="btn outline small">
+                            <i class="fas fa-redo"></i> Reload
+                        </button>
+                        <button id="settingsBtn" class="btn outline small">
+                            <i class="fas fa-cog"></i> Settings
+                        </button>
                     </div>
                 </div>
             </div>
         </main>
         
         <footer class="footer">
-            <p>© <span id="year"></span> TurboView | Not affiliated with Scratch or TurboWarp</p>
-            <div class="footer-links">
-                <a href="#" id="aboutBtn">About</a>
-                <a href="#" id="privacyBtn">Privacy</a>
-                <a href="#" id="contactBtn">Contact</a>
+            <div class="footer-content">
+                <p class="footer-text">© <span id="year"></span> LYT TurboWarp Project</p>
+                <div class="footer-links">
+                    <a href="#" id="aboutBtn"><i class="fas fa-question-circle"></i> About</a>
+                    <a href="#" id="keyboardBtn"><i class="fas fa-keyboard"></i> Shortcuts</a>
+                    <a href="#" id="githubBtn"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </div>
+            <div class="version-display">
+                <span class="version-badge">v1.0.0</span>
             </div>
         </footer>
     </div>
     
     <!-- JavaScript -->
-    <script src="app.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
