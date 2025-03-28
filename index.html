@@ -1,462 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neon TurboWarp Viewer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+    <meta name="description" content="A sleek viewer for TurboWarp and Scratch projects">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #6e45e2;
-            --primary-dark: #5d3ac9;
-            --accent: #88d3ce;
-            --text: #f8f9fa;
-            --text-secondary: #adb5bd;
-            --bg: #121212;
-            --card-bg: #1e1e1e;
-            --card-border: #333;
-            --error: #ff6b6b;
-            --success: #51cf66;
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            --glow: 0 0 15px rgba(110, 69, 226, 0.5);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.3;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1000px;
-            padding: 2rem;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-            padding-bottom: 1.5rem;
-        }
-
-        header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 3px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .project-container {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            margin-bottom: 3rem;
-            transition: var(--transition);
-        }
-
-        .project-container:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow), var(--glow);
-        }
-
-        .state {
-            padding: 3rem 2rem;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 400px;
-        }
-
-        #loading {
-            color: var(--text-secondary);
-        }
-
-        .loader {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .loader-circle {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 4px solid transparent;
-            border-radius: 50%;
-            border-top-color: var(--primary);
-            animation: spin 1.5s linear infinite;
-        }
-
-        .loader-circle:nth-child(2) {
-            border-top-color: var(--accent);
-            animation-delay: 0.2s;
-            width: 80%;
-            height: 80%;
-            top: 10%;
-            left: 10%;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            font-family: 'Fira Code', monospace;
-            margin-top: 1rem;
-            color: var(--text-secondary);
-            position: relative;
-        }
-
-        .loading-text::after {
-            content: '...';
-            position: absolute;
-            animation: dots 1.5s infinite steps(4, end);
-        }
-
-        @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60%, 100% { content: '...'; }
-        }
-
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        iframe.active {
-            display: block;
-            opacity: 1;
-        }
-
-        #error {
-            display: none;
-        }
-
-        .error-icon {
-            font-size: 3rem;
-            color: var(--error);
-            margin-bottom: 1.5rem;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .error-title {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--error);
-        }
-
-        .error-desc {
-            color: var(--text-secondary);
-            max-width: 500px;
-            margin: 0 auto 2rem;
-        }
-
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.8rem 1.8rem;
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            box-shadow: 0 4px 15px rgba(110, 69, 226, 0.3);
-        }
-
-        .btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(110, 69, 226, 0.4);
-        }
-
-        .btn i {
-            margin-right: 0.6rem;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            box-shadow: none;
-        }
-
-        .btn-outline:hover {
-            background: rgba(110, 69, 226, 0.1);
-        }
-
-        footer {
-            text-align: center;
-            margin-top: auto;
-            padding: 2rem 0;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .success-message {
-            display: none;
-            color: var(--success);
-            margin-top: 1rem;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1.5rem;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .state {
-                padding: 2rem 1.5rem;
-                min-height: 350px;
-            }
-
-            iframe {
-                height: 400px;
-            }
-
-            .btn-group {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-
-        /* Particle animation */
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
-        }
-    </style>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="particles" id="particles"></div>
+    <div class="particle-canvas" id="particles"></div>
+    <div class="scanlines"></div>
     
     <div class="container">
-        <header>
-            <h1>Interactive Experience</h1>
-            <p class="subtitle">Powered by TurboWarp technology</p>
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon"><i class="fas fa-code"></i></span>
+                <h1>Turbo<span>View</span></h1>
+            </div>
+            <p class="tagline">Next-gen Scratch Project Viewer</p>
         </header>
         
-        <div class="project-container">
-            <div class="state" id="loading">
-                <div class="loader">
-                    <div class="loader-circle"></div>
-                    <div class="loader-circle"></div>
+        <main class="main-content">
+            <div class="project-controls">
+                <div class="input-group">
+                    <input type="text" id="projectIdInput" placeholder="Enter Project ID" value="96708264">
+                    <button id="loadBtn" class="btn primary">
+                        <i class="fas fa-play"></i> Load
+                    </button>
                 </div>
-                <h3>Initializing Project</h3>
-                <p class="loading-text">Loading assets</p>
-            </div>
-            
-            <iframe id="projectFrame" 
-                    src="https://turbowarp.org/SCRATCH_PROJECT_ID/embed" 
-                    allowtransparency="true"
-                    frameborder="0"
-                    scrolling="no"
-                    allowfullscreen></iframe>
-            
-            <div class="state" id="error">
-                <div class="error-icon">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-                <h3 class="error-title">Connection Failed</h3>
-                <p class="error-desc">We couldn't load the project directly. Please try one of these alternative methods:</p>
-                <div class="btn-group">
-                    <a href="https://turbowarp.org/SCRATCH_PROJECT_ID" class="btn" target="_blank">
-                        <i class="fas fa-external-link-alt"></i> TurboWarp
-                    </a>
-                    <a href="https://scratch.mit.edu/projects/SCRATCH_PROJECT_ID" class="btn btn-outline" target="_blank">
-                        <i class="fab fa-codepen"></i> Scratch
-                    </a>
-                    <a href="YOUR_DIRECT_DOWNLOAD_URL" class="btn btn-outline" target="_blank">
-                        <i class="fas fa-download"></i> Download
-                    </a>
+                <div class="control-buttons">
+                    <button id="fullscreenBtn" class="btn outline">
+                        <i class="fas fa-expand"></i> Fullscreen
+                    </button>
+                    <button id="themeToggle" class="btn outline">
+                        <i class="fas fa-moon"></i> Theme
+                    </button>
                 </div>
             </div>
-        </div>
-        
-        <div class="success-message" id="success">
-            <i class="fas fa-check-circle"></i> Project loaded successfully!
-        </div>
-    </div>
-
-    <footer>
-        <p>© <span id="year"></span> Interactive Viewer | No previews generated</p>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set current year
-            document.getElementById('year').textContent = new Date().getFullYear();
             
-            const iframe = document.getElementById('projectFrame');
-            const loading = document.getElementById('loading');
-            const error = document.getElementById('error');
-            const success = document.getElementById('success');
-            const particles = document.getElementById('particles');
-            
-            // Create floating particles
-            createParticles();
-            
-            // Hide iframe initially to prevent any thumbnail flash
-            iframe.style.display = 'none';
-            
-            // Check if iframe loads successfully
-            iframe.onload = function() {
-                setTimeout(function() {
-                    try {
-                        // Additional verification
-                        if (iframe.contentDocument.body.textContent.includes('404') || 
-                            iframe.contentDocument.body.textContent.includes('Invalid')) {
-                            showError();
-                        } else {
-                            // Success - show iframe
-                            loading.style.display = 'none';
-                            error.style.display = 'none';
-                            iframe.classList.add('active');
-                            success.style.display = 'block';
-                        }
-                    } catch (e) {
-                        // Cross-origin error usually means it loaded
-                        loading.style.display = 'none';
-                        error.style.display = 'none';
-                        iframe.classList.add('active');
-                        success.style.display = 'block';
-                    }
-                }, 1500);
-            };
-            
-            iframe.onerror = function() {
-                showError();
-            };
-            
-            // Final timeout check
-            setTimeout(function() {
-                if (loading.style.display !== 'none' && !iframe.classList.contains('active')) {
-                    showError();
-                }
-            }, 10000);
-            
-            function showError() {
-                loading.style.display = 'none';
-                iframe.style.display = 'none';
-                error.style.display = 'flex';
-                success.style.display = 'none';
-            }
-            
-            function createParticles() {
-                const colors = ['rgba(110, 69, 226, 0.3)', 'rgba(136, 211, 206, 0.3)'];
+            <div class="project-viewer">
+                <div class="viewer-container" id="viewerContainer">
+                    <div class="loading-state" id="loading">
+                        <div class="loader">
+                            <div class="loader-circle"></div>
+                            <div class="loader-circle"></div>
+                            <div class="loader-circle"></div>
+                        </div>
+                        <h3>Initializing Project</h3>
+                        <p class="loading-text">Loading assets</p>
+                    </div>
+                    
+                    <iframe id="projectFrame" 
+                            allowtransparency="true"
+                            frameborder="0"
+                            scrolling="no"
+                            allowfullscreen></iframe>
+                    
+                    <div class="error-state" id="error">
+                        <div class="error-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3 class="error-title">Connection Failed</h3>
+                        <p class="error-desc">We couldn't load the project. Please try:</p>
+                        <div class="btn-group">
+                            <a href="#" id="retryBtn" class="btn primary">
+                                <i class="fas fa-sync-alt"></i> Retry
+                            </a>
+                            <a href="#" id="turbowarpBtn" class="btn outline" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Open in TurboWarp
+                            </a>
+                            <a href="#" id="scratchBtn" class="btn outline" target="_blank">
+                                <i class="fas fa-codepen"></i> Open in Scratch
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 
-                for (let i = 0; i < 20; i++) {
-                    const particle = document.createElement('div');
-                    particle.style.position = 'absolute';
-                    particle.style.width = `${Math.random() * 10 + 5}px`;
-                    particle.style.height = particle.style.width;
-                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    particle.style.borderRadius = '50%';
-                    particle.style.opacity = Math.random() * 0.5 + 0.1;
+                <div class="project-info">
+                    <div class="info-card">
+                        <h3><i class="fas fa-info-circle"></i> Project Info</h3>
+                        <div class="info-content">
+                            <p><span>Status:</span> <span id="projectStatus">Not loaded</span></p>
+                            <p><span>ID:</span> <span id="projectIdDisplay">-</span></p>
+                            <p><span>Source:</span> <span id="projectSource">-</span></p>
+                        </div>
+                    </div>
                     
-                    // Random position
-                    particle.style.left = `${Math.random() * 100}%`;
-                    particle.style.top = `${Math.random() * 100}%`;
-                    
-                    // Animation
-                    const duration = Math.random() * 20 + 10;
-                    const delay = Math.random() * -20;
-                    particle.style.animation = `float ${duration}s linear ${delay}s infinite`;
-                    
-                    particles.appendChild(particle);
-                }
-            }
-        });
-    </script>
+                    <div class="quick-links">
+                        <h3><i class="fas fa-rocket"></i> Quick Links</h3>
+                        <div class="links-grid">
+                            <a href="https://turbowarp.org" class="btn outline small" target="_blank">
+                                <i class="fas fa-bolt"></i> TurboWarp
+                            </a>
+                            <a href="https://scratch.mit.edu" class="btn outline small" target="_blank">
+                                <i class="fab fa-codepen"></i> Scratch
+                            </a>
+                            <a href="https://github.com" class="btn outline small" target="_blank">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="https://turbowarp.org/editor" class="btn outline small" target="_blank">
+                                <i class="fas fa-edit"></i> Editor
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <p>© <span id="year"></span> TurboView | Not affiliated with Scratch or TurboWarp</p>
+            <div class="footer-links">
+                <a href="#" id="aboutBtn">About</a>
+                <a href="#" id="privacyBtn">Privacy</a>
+                <a href="#" id="contactBtn">Contact</a>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="app.js"></script>
 </body>
 </html>
