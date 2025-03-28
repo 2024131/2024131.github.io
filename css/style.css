@@ -1,6 +1,4 @@
-/* ===== Base Styles ===== */
 :root {
-    /* LYT Color Palette */
     --primary: #7b2cbf;
     --primary-dark: #5a189a;
     --primary-light: #9d4edd;
@@ -17,8 +15,6 @@
     --success: #4cc9f0;
     --warning: #f8961e;
     --info: #90e0ef;
-    
-    /* Effects */
     --glow: 0 0 15px currentColor;
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -45,7 +41,6 @@
     --info: #00a8e8;
 }
 
-/* ===== Reset & Base ===== */
 * {
     margin: 0;
     padding: 0;
@@ -68,6 +63,30 @@ body {
     position: relative;
 }
 
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    background: linear-gradient(
+        45deg,
+        rgba(123, 44, 191, 0.1) 0%,
+        rgba(0, 187, 249, 0.1) 50%,
+        rgba(123, 44, 191, 0.1) 100%
+    );
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+    z-index: -2;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 h1, h2, h3 {
     font-weight: 700;
     line-height: 1.2;
@@ -83,7 +102,6 @@ a:hover {
     color: var(--primary);
 }
 
-/* ===== Layout ===== */
 .container {
     width: 100%;
     max-width: 1400px;
@@ -102,6 +120,7 @@ a:hover {
     align-items: center;
     margin-bottom: 2rem;
     position: relative;
+    flex-wrap: wrap;
 }
 
 .logo {
@@ -128,6 +147,15 @@ a:hover {
     color: var(--accent);
 }
 
+.header-tagline {
+    color: var(--text-secondary);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    opacity: 0.9;
+    width: 100%;
+}
+
 .header-controls {
     display: flex;
     gap: 0.5rem;
@@ -152,12 +180,22 @@ a:hover {
     }
 }
 
-/* ===== Project Controls ===== */
 .project-controls {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     margin-bottom: 1rem;
+    position: relative;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius-sm);
+    transition: all 0.3s ease;
+    padding: 1.5rem;
+    background: var(--card-bg);
+}
+
+.project-controls:focus-within {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(123, 44, 191, 0.3);
 }
 
 .input-group {
@@ -208,7 +246,6 @@ a:hover {
     font-size: 0.8rem;
 }
 
-/* ===== Buttons ===== */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -244,6 +281,34 @@ a:hover {
     background: linear-gradient(135deg, var(--primary-light), var(--primary));
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(123, 44, 191, 0.4);
+}
+
+.btn.primary::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, 
+        var(--primary-light), 
+        var(--accent),
+        var(--primary));
+    background-size: 200% 200%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn.primary:hover::before {
+    opacity: 1;
+    animation: gradientFlow 3s linear infinite;
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
 }
 
 .btn.outline {
@@ -285,7 +350,6 @@ a:hover {
     margin-top: 1.5rem;
 }
 
-/* ===== Viewer Container ===== */
 .viewer-container {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -317,7 +381,6 @@ a:hover {
     box-shadow: 0 15px 45px rgba(123, 44, 191, 0.3);
 }
 
-/* ===== Loading State ===== */
 .loading-state {
     display: flex;
     flex-direction: column;
@@ -421,7 +484,6 @@ a:hover {
     60%, 100% { content: '...'; }
 }
 
-/* ===== Iframe ===== */
 iframe {
     width: 100%;
     height: 600px;
@@ -438,7 +500,6 @@ iframe.active {
     transform: scale(1);
 }
 
-/* ===== Error State ===== */
 .error-state {
     display: none;
     flex-direction: column;
@@ -483,7 +544,6 @@ iframe.active {
     line-height: 1.7;
 }
 
-/* ===== Project Info ===== */
 .project-info {
     display: flex;
     flex-direction: column;
@@ -497,6 +557,12 @@ iframe.active {
     padding: 1.5rem;
     backdrop-filter: blur(10px);
     box-shadow: var(--shadow);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.info-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 }
 
 .info-card h3 {
@@ -564,11 +630,55 @@ iframe.active {
     gap: 0.5rem;
 }
 
-/* ===== Footer ===== */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 3rem 0;
+}
+
+.feature-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.feature-card h3 {
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+}
+
+.feature-card:hover i {
+    transform: scale(1.2);
+    color: var(--accent);
+}
+
 .footer {
     margin-top: 3rem;
     padding-top: 2rem;
     position: relative;
+    background: linear-gradient(to top, rgba(10, 10, 18, 0.9), transparent);
+    padding-bottom: 1rem;
 }
 
 .footer::before {
@@ -584,10 +694,11 @@ iframe.active {
 }
 
 .footer-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
 }
 
 .footer-text {
@@ -598,6 +709,8 @@ iframe.active {
 .footer-links {
     display: flex;
     gap: 1.5rem;
+    justify-content: center;
+    margin-top: 1rem;
 }
 
 .footer-links a {
@@ -628,7 +741,6 @@ iframe.active {
     font-family: 'Roboto Mono', monospace;
 }
 
-/* ===== Effects ===== */
 .scanlines {
     position: fixed;
     top: 0;
@@ -676,6 +788,12 @@ iframe.active {
     animation: float 15s infinite linear;
     opacity: 0.3;
     z-index: -1;
+    transition: all 0.3s ease;
+}
+
+.particle:hover {
+    transform: scale(1.5);
+    opacity: 0.8;
 }
 
 @keyframes float {
@@ -696,7 +814,125 @@ iframe.active {
     }
 }
 
-/* ===== Responsive Design ===== */
+.glow-effect {
+    position: relative;
+}
+
+.glow-effect::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 15px var(--primary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.glow-effect:hover::after {
+    opacity: 0.6;
+}
+
+.neon-border {
+    position: relative;
+    border: 1px solid transparent;
+}
+
+.neon-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid transparent;
+    border-radius: inherit;
+    background: linear-gradient(135deg, var(--primary), var(--accent)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.floating {
+    animation: float 6s ease-in-out infinite;
+}
+
+.typewriter {
+    overflow: hidden;
+    border-right: 2px solid var(--primary);
+    white-space: nowrap;
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--primary) }
+}
+
+.ripple {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(10);
+        opacity: 0;
+    }
+}
+
+.custom-cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(123, 44, 191, 0.5);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: screen;
+    transition: transform 0.1s ease;
+}
+
+.custom-cursor.cursor-click {
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(0, 187, 249, 0.7);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-light);
+}
+
 @media (max-width: 992px) {
     .container {
         padding: 1rem;
@@ -730,61 +966,4 @@ iframe.active {
         align-items: center;
     }
     
-    .preset-buttons {
-        flex-direction: column;
-    }
-    
-    .preset-btn {
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .header {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: flex-start;
-    }
-    
-    .logo h1 {
-        font-size: 1.6rem;
-    }
-    
-    iframe {
-        height: 350px;
-    }
-    
-    .input-group {
-        flex-direction: column;
-    }
-    
-    .input-prefix {
-        border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
-    }
-    
-    #projectIdInput {
-        border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
-    }
-}
-
-/* ===== Fullscreen Mode ===== */
-:fullscreen .container {
-    max-width: 100%;
-    padding: 0;
-}
-
-:fullscreen .project-viewer {
-    grid-template-columns: 1fr;
-    height: 100vh;
-}
-
-:fullscreen iframe {
-    height: 100vh;
-}
-
-:fullscreen .project-info,
-:fullscreen .header,
-:fullscreen .project-controls,
-:fullscreen .footer {
-    display: none;
-}
+   
