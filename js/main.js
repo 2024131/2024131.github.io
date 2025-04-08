@@ -50,6 +50,8 @@ function init() {
     initTheme();
     createParticles();
     setupPresetButtons();
+    initMatrixRain();
+    document.addEventListener('mousemove', updateLightPosition);
 }
 
 function setCurrentYear() {
@@ -77,7 +79,7 @@ function setupEventListeners() {
 }
 
 function setupPresetButtons() {
-    document.querySelectorAll('.preset-btn').forEach(btn => {
+    document.querySelectorAll('.project-thumb').forEach(btn => {
         btn.addEventListener('click', () => {
             const projectId = btn.dataset.id;
             DOM.projectInput.value = projectId;
@@ -86,124 +88,13 @@ function setupPresetButtons() {
     });
 }
 
-function loadInitialProject() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const projectId = urlParams.get('id') || CONFIG.DEFAULT_PROJECT;
-    loadProject(projectId);
-}
-
-function loadProjectFromInput() {
-    const projectId = DOM.projectInput.value.trim();
-    if (!projectId) return;
-    window.history.pushState({}, '', `?id=${projectId}`);
-    loadProject(projectId);
-}
-
-function loadProject(projectId) {
-    if (state.isLoading) return;
-
-    state.currentProject = projectId;
-    state.isLoading = true;
-    state.retryCount = 0;
-    state.loadStartTime = Date.now();
-
-    showLoadingState();
-    updateProjectInfo('Loading', projectId, 'TurboWarp', '-', '-');
-    animateProgressBar();
-    updateIframeSource(projectId);
-
-    setTimeout(() => {
-        if (state.isLoading) {
-            handleLoadFailure();
-        }
-    }, CONFIG.LOAD_TIMEOUT);
-}
-
-function animateProgressBar() {
-    if (DOM.progressFill) {
-        DOM.progressFill.style.animation = 'progress-loading 2s infinite ease-in-out';
-    }
-}
-
-function stopProgressBar() {
-    if (DOM.progressFill) {
-        DOM.progressFill.style.animation = 'none';
-        DOM.progressFill.style.width = '100%';
-    }
-}
-
-function updateIframeSource(projectId) {
-    DOM.iframe.src = CONFIG.TURBOWARP_URL.replace('{id}', projectId);
-    DOM.turbowarpBtn.href = `https://turbowarp.org/${projectId}`;
-    DOM.scratchBtn.href = `https://scratch.mit.edu/projects/${projectId}`;
-}
-
-function showLoadingState() {
-    DOM.loading.style.display = 'flex';
-    DOM.error.style.display = 'none';
-    DOM.iframe.classList.remove('active');
-    updateStatusBadge('loading');
-}
-
-function showSuccessState() {
-    state.isLoading = false;
-    DOM.loading.style.display = 'none';
-    DOM.error.style.display = 'none';
-    DOM.iframe.classList.add('active');
-    DOM.projectInput.value = state.currentProject;
-    stopProgressBar();
-    const loadTime = ((Date.now() - state.loadStartTime) / 1000).toFixed(2);
-    updateProjectInfo('Loaded', state.currentProject, 'TurboWarp', '-', `${loadTime}s`);
-    updateStatusBadge('success');
-    updateTimestamp();
-    startFPSMonitoring();
-}
-
-function showErrorState() {
-    state.isLoading = false;
-    DOM.loading.style.display = 'none';
-    DOM.error.style.display = 'flex';
-    stopProgressBar();
-    updateProjectInfo('Error', state.currentProject, 'TurboWarp', '-', '-');
-    updateStatusBadge('error');
-    stopFPSMonitoring();
-}
-
-function updateProjectInfo(status, id, source, fps, loadTime) {
-    if (DOM.projectStatus) {
-        DOM.projectStatus.textContent = status;
-        updateStatusBadge(status.toLowerCase());
-    }
-    if (DOM.projectIdDisplay) DOM.projectIdDisplay.textContent = id;
-    if (DOM.projectSource) DOM.projectSource.textContent = source;
-    if (DOM.projectFPS) DOM.projectFPS.textContent = fps;
-    if (DOM.projectLoadTime) DOM.projectLoadTime.textContent = loadTime;
-}
-
-function updateStatusBadge(status) {
-    if (!DOM.projectStatus) return;
-    DOM.projectStatus.className = 'status-badge';
-    DOM.projectStatus.classList.add(status);
-    switch(status) {
-        case 'loading':
-            DOM.projectStatus.style.color = 'var(--warning)';
-            break;
-        case 'loaded':
-        case 'success':
-            DOM.projectStatus.style.color = 'var(--success)';
-            break;
-        case 'error':
-            DOM.projectStatus.style.color = 'var(--error)';
-            break;
-        default:
-            DOM.projectStatus.style.color = 'var(--text-secondary)';
-    }
-}
-
-function updateTimestamp() {
-    if (DOM.projectTimestamp) {
-        const now = new Date();
-        DOM.projectTimestamp.textContent = now.toLocaleTimeString();
-    }
-}
-
+function initMatrixRain() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'matrixCanvas';
+    document.getElementById('matrixRain').appendChild(canvas);
+    
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュル
