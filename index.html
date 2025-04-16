@@ -1,1 +1,141 @@
-Updating...
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Update</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        .update-container {
+            text-align: center;
+            width: 80%;
+            max-width: 500px;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+        
+        .progress-container {
+            background: #333;
+            border-radius: 10px;
+            height: 20px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            background: #4CAF50;
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 10px;
+        }
+        
+        .status {
+            margin: 20px 0;
+            font-size: 1.2rem;
+        }
+        
+        .spinner {
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 5px solid #4CAF50;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .version {
+            margin-top: 20px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="update-container">
+        <div class="logo">SYSTEM UPDATE</div>
+        <div class="spinner"></div>
+        <div class="status">Preparing update...</div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="details" id="updateDetails">
+            Downloading update files...
+        </div>
+        
+        <div class="version">Version 2.5.1 | Do not turn off your device</div>
+    </div>
+
+    <script>
+        const messages = [
+            "Downloading update files...",
+            "Verifying package...",
+            "Installing components...",
+            "Optimizing system...",
+            "Finalizing update..."
+        ];
+        
+        const progressBar = document.getElementById('progressBar');
+        const updateDetails = document.getElementById('updateDetails');
+        const statusEl = document.querySelector('.status');
+        
+        let progress = 0;
+        
+        // Simulate update progress
+        const updateInterval = setInterval(() => {
+            progress += Math.random() * 10;
+            if (progress > 100) progress = 100;
+            
+            progressBar.style.width = `${progress}%`;
+            
+            // Update messages at different progress points
+            if (progress < 25) {
+                updateDetails.textContent = messages[0];
+            } else if (progress < 50) {
+                updateDetails.textContent = messages[1];
+            } else if (progress < 75) {
+                updateDetails.textContent = messages[2];
+            } else if (progress < 90) {
+                updateDetails.textContent = messages[3];
+            } else {
+                updateDetails.textContent = messages[4];
+            }
+            
+            statusEl.textContent = `${Math.floor(progress)}% Complete`;
+            
+            if (progress === 100) {
+                clearInterval(updateInterval);
+                statusEl.textContent = "Update Complete!";
+                updateDetails.textContent = "Restarting system...";
+                
+                // Redirect after completion (simulate restart)
+                setTimeout(() => {
+                    window.location.href = "home.html"; // Change to your actual page
+                }, 2000);
+            }
+        }, 800);
+    </script>
+</body>
+</html>
