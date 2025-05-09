@@ -1,43 +1,32 @@
-// Countdown Timer Logic
-const launchDate = new Date("2025-05-01T00:00:00Z").getTime();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LYT GAME | Coming Soon</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-// Function to update the countdown every second
-function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = launchDate - now;
+    <div class="container">
+        <header>
+            <h1>LYT GAME</h1>
+            <p>Coming Soon!</p>
+            <div class="countdown">
+                <p id="countdown-timer">
+                    <span id="days"></span> Days 
+                    <span id="hours"></span> Hours 
+                    <span id="minutes"></span> Minutes 
+                    <span id="seconds"></span> Seconds
+                </p>
+            </div>
+        </header>
 
-    if (distance < 0) {
-        // Redirect to the game page when the countdown reaches zero
-        window.location.href = "https://2024131.github.io-test";
-        return;
-    }
+        <div class="footer">
+            <button id="theme-toggle">🌙</button> <!-- Dark/Light mode toggle -->
+        </div>
+    </div>
 
-    // Calculate time remaining
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Update the HTML with the countdown
-    document.getElementById("days").innerHTML = days;
-    document.getElementById("hours").innerHTML = hours;
-    document.getElementById("minutes").innerHTML = minutes;
-    document.getElementById("seconds").innerHTML = seconds;
-    document.getElementById("countdown-timer").innerHTML = `${hours}:${minutes}:${seconds}`;
-}
-
-setInterval(updateCountdown, 1000);
-
-// Theme Toggle Functionality
-const themeToggleButton = document.getElementById("theme-toggle");
-
-themeToggleButton.addEventListener("click", () => {
-    const currentTheme = document.documentElement.getAttribute("data-theme");
-    if (currentTheme === "dark") {
-        document.documentElement.setAttribute("data-theme", "light");
-        themeToggleButton.textContent = "🌙";
-    } else {
-        document.documentElement.setAttribute("data-theme", "dark");
-        themeToggleButton.textContent = "🌞";
-    }
-});
+    <script src="main.js"></script>
+</body>
+</html>
