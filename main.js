@@ -1,5 +1,5 @@
 // Countdown Timer Logic
-const launchDate = new Date("2025-07-01T00:00:00Z").getTime();
+const launchDate = new Date("2025-05-01T00:00:00Z").getTime();
 
 // Function to update the countdown every second
 function updateCountdown() {
@@ -7,7 +7,8 @@ function updateCountdown() {
     const distance = launchDate - now;
 
     if (distance < 0) {
-        document.getElementById("countdown-timer").innerHTML = "Launched!";
+        // Redirect to the game page when the countdown reaches zero
+        window.location.href = "https://2024131.github.io-test";
         return;
     }
 
@@ -25,6 +26,7 @@ function updateCountdown() {
     document.getElementById("countdown-timer").innerHTML = `${hours}:${minutes}:${seconds}`;
 }
 
+// Call the updateCountdown function every second
 setInterval(updateCountdown, 1000);
 
 // Theme Toggle Functionality
@@ -32,11 +34,13 @@ const themeToggleButton = document.getElementById("theme-toggle");
 
 themeToggleButton.addEventListener("click", () => {
     const currentTheme = document.documentElement.getAttribute("data-theme");
+
+    // Toggle theme between dark and light
     if (currentTheme === "dark") {
         document.documentElement.setAttribute("data-theme", "light");
-        themeToggleButton.textContent = "🌙";
+        themeToggleButton.textContent = "🌙";  // Set icon for dark mode
     } else {
         document.documentElement.setAttribute("data-theme", "dark");
-        themeToggleButton.textContent = "🌞";
+        themeToggleButton.textContent = "🌞";  // Set icon for light mode
     }
 });
