@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Set launch date (December 31, 2025)
-    const launchDate = new Date('2025-12-31T00:00:00');
+    // Set launch date
+    const launchDate = new Date('2025-07-01T00:00:00');
     
     // DOM Elements
     const countdownContainer = document.getElementById('countdown-container');
