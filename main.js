@@ -1,5 +1,5 @@
 // Countdown Timer Logic
-const launchDate = new Date("2025-05-01T00:00:00Z").getTime();
+const launchDate = new Date("2025-06-01T00:00:00Z").getTime();
 
 // Function to update the countdown every second
 function updateCountdown() {
