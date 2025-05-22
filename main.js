@@ -1,3 +1,10 @@
+// 配置项
+const CONFIG = {
+    TARGET_DATE: '2025-07-01T00:00:00',  // 目标日期
+    REDIRECT_URL: 'https://2024131.github.io/turbowarp/',  // 你的TurboWarp项目地址
+    REDIRECT_DELAY: 5000  // 5秒后跳转
+};
+
 // 防爬虫邮箱处理
 document.getElementById('emailLink').addEventListener('click', function(e) {
     e.preventDefault();
@@ -6,27 +13,32 @@ document.getElementById('emailLink').addEventListener('click', function(e) {
     window.location.href = 'mailto:' + user + '@' + domain;
 });
 
-// 配置项
-const CONFIG = {
-    TARGET_DATE: '2025-07-01T00:00:00',  // 目标日期
-    REDIRECT_URL: 'https://example.com',  // 跳转的目标网址
-    REDIRECT_DELAY: 3000                  // 跳转延迟(毫秒)
-};
-
+// 倒计时功能
 function updateCountdown() {
     const launchDate = new Date(CONFIG.TARGET_DATE);
     const now = new Date();
     const diff = launchDate - now;
 
     if (diff <= 0) {
-        document.querySelector('h1').textContent = "We're Live!";
-        document.querySelector('p').textContent = "Redirecting...";
-        document.getElementById('emailLink').innerHTML = '<span>🚀</span> Launch App';
+        document.querySelector('h1').textContent = "Redirecting!";
+        document.querySelector('p').textContent = "Taking you to TurboWarp...";
         
-        // 倒计时结束后跳转
-        setTimeout(() => {
-            window.location.href = CONFIG.REDIRECT_URL;
-        }, CONFIG.REDIRECT_DELAY);
+        // 显示跳转倒计时
+        let countdown = CONFIG.REDIRECT_DELAY / 1000;
+        const countdownElement = document.createElement('div');
+        countdownElement.id = 'redirect-countdown';
+        countdownElement.style.marginTop = '15px';
+        document.querySelector('.card').appendChild(countdownElement);
+        
+        const interval = setInterval(() => {
+            countdownElement.textContent = `Auto redirect in ${countdown} seconds`;
+            countdown--;
+            
+            if (countdown < 0) {
+                clearInterval(interval);
+                window.location.href = CONFIG.REDIRECT_URL;
+            }
+        }, 1000);
         
         return;
     }
