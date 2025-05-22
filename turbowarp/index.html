@@ -1,10 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>TurboWarp Project</title>
-    <meta http-equiv="refresh" content="0; url=https://turbowarp.org/editor?project_url=https://2024131.github.io/turbowarp/project.sb3">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LYT TurboWarp Project</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* 跳转页专属样式 */
+        .redirect-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(108, 92, 231, 0.3);
+            border-radius: 50%;
+            border-top-color: #6c5ce7;
+            animation: spin 1s ease-in-out infinite;
+            margin: 2rem auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .manual-redirect {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(108, 92, 231, 0.1);
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <p>If you are not redirected automatically, <a href="https://turbowarp.org/editor?project_url=https://2024131.github.io/turbowarp/project.sb3">click here</a>.</p>
+    <div class="redirect-container">
+        <div class="logo">LYT</div>
+        <h1>TurboWarp Project</h1>
+        
+        <div class="loader"></div>
+        
+        <p>Preparing your interactive experience...</p>
+        
+        <div class="manual-redirect">
+            <p>If the redirect doesn't work automatically:</p>
+            <a href="https://turbowarp.org/editor?project_url=https://2024131.github.io/turbowarp/project.sb3" 
+               class="cta-button">
+               Open Project Manually
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 配置项
+        const CONFIG = {
+            TURBOWARP_URL: "https://turbowarp.org/editor",
+            PROJECT_URL: "https://2024131.github.io/turbowarp/project.sb3",
+            DELAY: 3000  // 3秒后跳转
+        };
+        
+        // 主跳转函数
+        function redirectToTurboWarp() {
+            const fullUrl = `${CONFIG.TURBOWARP_URL}?project_url=${encodeURIComponent(CONFIG.PROJECT_URL)}`;
+            
+            // 显示倒计时
+            let secondsRemaining = Math.floor(CONFIG.DELAY / 1000);
+            const countdownElement = document.createElement('div');
+            countdownElement.className = 'countdown';
+            document.querySelector('p').after(countdownElement);
+            
+            const interval = setInterval(() => {
+                countdownElement.textContent = `Redirecting in ${secondsRemaining} seconds...`;
+                secondsRemaining--;
+                
+                if (secondsRemaining < 0) {
+                    clearInterval(interval);
+                    window.location.href = fullUrl;
+                }
+            }, 1000);
+        }
+        
+        // 页面加载后启动跳转
+        document.addEventListener('DOMContentLoaded', () => {
+            // 先检查项目文件是否存在
+            fetch(CONFIG.PROJECT_URL, { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        redirectToTurboWarp();
+                    } else {
+                        document.querySelector('p').textContent = "Error: Project file not found";
+                        document.querySelector('.loader').style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error("Error checking project:", error);
+                    document.querySelector('p').textContent = "Connection error";
+                    document.querySelector('.loader').style.display = 'none';
+                });
+        });
+    </script>
 </body>
 </html>
