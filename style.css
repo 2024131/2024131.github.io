@@ -105,5 +105,4 @@ h1 {
 @media (max-width: 600px) {
     .countdown-number { font-size: 1.5rem; }
     .logo { width: 60px; height: 60px; font-size: 1.5rem; }
-    .countdown { gap: 10px; }
 }
