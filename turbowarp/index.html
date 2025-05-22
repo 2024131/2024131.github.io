@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LYT TurboWarp Project</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* 跳转页专属样式 */
         .redirect-container {
             max-width: 600px;
             margin: 0 auto;
@@ -19,7 +18,7 @@
             height: 50px;
             border: 5px solid rgba(108, 92, 231, 0.3);
             border-radius: 50%;
-            border-top-color: #6c5ce7;
+            border-top-color: var(--primary);
             animation: spin 1s ease-in-out infinite;
             margin: 2rem auto;
         }
@@ -33,25 +32,37 @@
             padding: 1rem;
             background: rgba(108, 92, 231, 0.1);
             border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .countdown-message {
+            margin: 1rem 0;
+            font-size: 1.1rem;
+            color: var(--text-light);
         }
     </style>
 </head>
 <body>
-    <div class="redirect-container">
-        <div class="logo">LYT</div>
-        <h1>TurboWarp Project</h1>
-        
-        <div class="loader"></div>
-        
-        <p>Preparing your interactive experience...</p>
-        
-        <div class="manual-redirect">
-            <p>If the redirect doesn't work automatically:</p>
-            <a href="https://turbowarp.org/editor?project_url=https://2024131.github.io/turbowarp/project.sb3" 
-               class="cta-button">
-               Open Project Manually
-            </a>
+    <div class="container">
+        <div class="card redirect-container">
+            <div class="logo">LYT</div>
+            <h1>TurboWarp Project</h1>
+            
+            <div class="loader"></div>
+            
+            <p class="countdown-message">Preparing your interactive experience...</p>
+            
+            <div class="manual-redirect">
+                <p>If the redirect doesn't work automatically:</p>
+                <a href="#" id="manualRedirect" class="cta-button">
+                    Open Project Manually
+                </a>
+            </div>
         </div>
+        
+        <button id="themeToggle" aria-label="Toggle theme">
+            <span class="theme-icon">🌙</span>
+        </button>
     </div>
 
     <script>
@@ -59,18 +70,40 @@
         const CONFIG = {
             TURBOWARP_URL: "https://turbowarp.org/editor",
             PROJECT_URL: "https://2024131.github.io/turbowarp/project.sb3",
-            DELAY: 3000  // 3秒后跳转
+            DELAY: 5000  // 5秒后跳转
         };
         
-        // 主跳转函数
-        function redirectToTurboWarp() {
+        // 初始化主题
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.querySelector('.theme-icon').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        }
+        
+        // 切换主题
+        function setupThemeToggle() {
+            document.getElementById('themeToggle').addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                this.querySelector('.theme-icon').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+            });
+        }
+        
+        // 设置手动跳转链接
+        function setupManualRedirect() {
             const fullUrl = `${CONFIG.TURBOWARP_URL}?project_url=${encodeURIComponent(CONFIG.PROJECT_URL)}`;
-            
-            // 显示倒计时
+            document.getElementById('manualRedirect').href = fullUrl;
+            return fullUrl;
+        }
+        
+        // 自动跳转功能
+        function startAutoRedirect(fullUrl) {
             let secondsRemaining = Math.floor(CONFIG.DELAY / 1000);
             const countdownElement = document.createElement('div');
-            countdownElement.className = 'countdown';
-            document.querySelector('p').after(countdownElement);
+            countdownElement.className = 'countdown-message';
+            document.querySelector('.countdown-message').after(countdownElement);
             
             const interval = setInterval(() => {
                 countdownElement.textContent = `Redirecting in ${secondsRemaining} seconds...`;
@@ -83,24 +116,30 @@
             }, 1000);
         }
         
-        // 页面加载后启动跳转
-        document.addEventListener('DOMContentLoaded', () => {
-            // 先检查项目文件是否存在
+        // 初始化
+        function init() {
+            initTheme();
+            setupThemeToggle();
+            const fullUrl = setupManualRedirect();
+            
+            // 检查项目文件是否存在
             fetch(CONFIG.PROJECT_URL, { method: 'HEAD' })
                 .then(response => {
                     if (response.ok) {
-                        redirectToTurboWarp();
+                        startAutoRedirect(fullUrl);
                     } else {
-                        document.querySelector('p').textContent = "Error: Project file not found";
+                        document.querySelector('.countdown-message').textContent = "Error: Project file not found";
                         document.querySelector('.loader').style.display = 'none';
                     }
                 })
                 .catch(error => {
                     console.error("Error checking project:", error);
-                    document.querySelector('p').textContent = "Connection error";
+                    document.querySelector('.countdown-message').textContent = "Connection error";
                     document.querySelector('.loader').style.display = 'none';
                 });
-        });
+        }
+        
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
