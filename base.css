@@ -1,230 +1,196 @@
-/* --- CSS Variables for Theming --- */
 :root {
     /* Light theme colors */
-    --primary: #6c5ce7; /* Main accent color (e.g., for logo, numbers, buttons) */
-    --primary-light: #a29bfe; /* Lighter shade of primary (e.g., for separators) */
-    --primary-dark: #5649c0; /* Darker shade of primary (e.g., for button hover) */
+    --background-color-light: #f4f7f6;
+    --text-color-light: #333;
+    --card-background-light: #ffffff;
+    --button-background-light: #007bff;
+    --button-text-light: #ffffff;
+    --link-color-light: #007bff;
+    --border-color-light: #e0e0e0;
+    --shadow-color-light: rgba(0, 0, 0, 0.1);
 
-    --text: #2d3436; /* Main text color */
-    --text-light: #636e72; /* Lighter text color (e.g., subtitles, labels) */
+    /* Dark theme colors */
+    --background-color-dark: #2c2c2c;
+    --text-color-dark: #e0e0e0;
+    --card-background-dark: #3a3a3a;
+    --button-background-dark: #81a2be;
+    --button-text-dark: #2c2c2c;
+    --link-color-dark: #81a2be;
+    --border-color-dark: #4a4a4a;
+    --shadow-color-dark: rgba(0, 0, 0, 0.3);
 
-    --bg: #f9f9f9; /* Overall page background */
-    --card-bg: #ffffff; /* Background for cards/containers */
-    --border-color: #eee; /* Light theme border color */
+    /* Default to light theme variables */
+    --background-color: var(--background-color-light);
+    --text-color: var(--text-color-light);
+    --card-background: var(--card-background-light);
+    --button-background: var(--button-background-light);
+    --button-text: var(--button-text-light);
+    --link-color: var(--link-color-light);
+    --border-color: var(--border-color-light);
+    --shadow-color: var(--shadow-color-light);
 
-    --shadow: rgba(0, 0, 0, 0.1); /* Shadow color for light theme */
+    /* Fonts */
+    --font-family-body: 'Inter', sans-serif;
+    --font-family-heading: 'Inter', sans-serif;
 }
 
-[data-theme="dark"] {
-    /* Dark theme colors - overrides light theme variables */
-    --primary: #a29bfe; /* Main accent color (e.g., for logo, numbers, buttons) */
-    --primary-light: #847bff; /* Lighter shade of primary (e.g., for separators) */
-    --primary-dark: #6a5fe0; /* Adjusted darker shade for dark theme hover */
-
-    --text: #f5f6fa; /* Main text color */
-    --text-light: #dcdde1; /* Lighter text color (e.g., subtitles, labels) */
-
-    --bg: #1e272e; /* Overall page background */
-    --card-bg: #2f3640; /* Background for cards/containers */
-    --border-color: #4a5a6a; /* Dark theme border color */
-
-    --shadow: rgba(0, 0, 0, 0.3); /* Shadow color for dark theme */
-}
-
-/* --- Global Resets and Transitions --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; /* Include padding and border in element's total width and height */
-    /* Apply transition to all relevant properties for smooth theme changes */
-    transition: background-color 0.3s ease, color 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+/* Dark theme activation */
+html[data-theme='dark'] {
+    --background-color: var(--background-color-dark);
+    --text-color: var(--text-color-dark);
+    --card-background: var(--card-background-dark);
+    --button-background: var(--button-background-dark);
+    --button-text: var(--button-text-dark);
+    --link-color: var(--link-color-dark);
+    --border-color: var(--border-color-dark);
+    --shadow-color: var(--shadow-color-dark);
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacMacFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; /* Modern font stack */
-    background-color: var(--bg);
-    color: var(--text);
+    font-family: var(--font-family-body);
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
     min-height: 100vh;
-    display: flex; /* Flexbox for centering content */
-    justify-content: center;
-    align-items: center;
-    padding: 20px; /* Padding for small screens */
-    line-height: 1.6;
-}
-
-/* --- Container Layout --- */
-.container {
-    width: 100%;
-    max-width: 800px; /* Max width for the main content area */
-    position: relative; /* For positioning the theme toggle if it's inside */
-    display: flex; /* Flexbox to arrange card and button */
+    display: flex;
     flex-direction: column;
-    align-items: center; /* Center items horizontally */
-    gap: 30px; /* Space between card and theme toggle */
 }
 
-/* --- Card Styles (Base) --- */
-.card { /* Base card styles apply to both main card and download card */
-    background-color: var(--card-bg);
-    border-radius: 20px;
-    padding: 2.5rem; /* Adjusted padding for better spacing */
-    box-shadow: 0 10px 30px var(--shadow);
-    text-align: center;
-    width: 100%; /* Take full width within its container */
-    max-width: 550px; /* Max width for consistency */
-}
-
-/* --- Header Styles (Base) --- */
-.header {
-    margin-bottom: 2rem;
-}
-
-.logo {
-    width: 100px;
-    height: 100px;
-    background: var(--primary);
-    color: white;
-    border-radius: 50%;
+.container {
+    flex: 1; /* Allows container to grow and push footer down */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin: 0 auto 1.5rem; /* Center logo and add margin below */
-    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3); /* Fixed alpha for consistent shadow */
-    transition: background 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in element's total width and height */
 }
 
-h1 {
-    font-size: 2.2rem;
-    margin-bottom: 0.5rem;
-    color: var(--primary); /* Heading color using primary accent */
+.card {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px var(--shadow-color);
+    padding: 40px;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
 }
 
-p { /* General paragraph styling */
-    color: var(--text);
+h1, h2, h3 {
+    font-family: var(--font-family-heading);
+    color: var(--text-color);
+    margin-top: 0;
 }
 
-.subtitle {
-    color: var(--text-light);
-    font-size: 1.1rem;
+p {
+    line-height: 1.6;
 }
 
-/* --- Common Button Styles (Base) --- */
-.download-btn { /* Apply to all buttons with this class */
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--primary);
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 50px;
+a {
+    color: var(--link-color);
     text-decoration: none;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+    transition: color 0.3s ease;
 }
 
-.download-btn:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
-}
-
-/* --- Common Link Styles (Base) --- */
-.direct-link {
-    font-size: 0.9rem;
-    color: var(--text-light);
-}
-
-.direct-link a {
-    color: var(--primary);
-    text-decoration: none;
-    transition: opacity 0.2s ease;
-}
-
-.direct-link a:hover {
-    opacity: 0.8;
+a:hover {
     text-decoration: underline;
+    filter: brightness(1.2); /* Slightly brighter on hover */
 }
 
-/* --- Theme Toggle Button (Base) --- */
+/* --- Theme Toggle Button --- */
 #themeToggle {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: var(--primary);
-    color: white;
+    background-color: var(--button-background);
+    color: var(--button-text);
     border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
     cursor: pointer;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
-    box-shadow: 0 4px 10px var(--shadow);
-    z-index: 100;
-    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    align-items: center;
+    z-index: 1000; /* Ensure it stays on top */
 }
 
 #themeToggle:hover {
     transform: scale(1.1);
 }
 
-/* --- Base Mobile Responsiveness --- */
-@media (max-width: 768px) {
-    .card {
-        padding: 1.8rem;
-        border-radius: 16px;
-    }
-    
-    .logo {
-        width: 80px;
-        height: 80px;
-        font-size: 2rem;
-    }
-    
-    h1 {
-        font-size: 1.8rem;
-    }
-    
-    p { /* General paragraph styling */
-        font-size: 0.95rem;
-    }
-
-    .subtitle {
-        font-size: 1rem;
-    }
-    
-    .download-btn {
-        padding: 0.9rem 1.8rem;
-        font-size: 1rem;
-    }
-
-    #themeToggle {
-        width: 50px;
-        height: 50px;
-        font-size: 1.6rem;
-        bottom: 15px;
-        right: 15px;
-    }
+#themeToggle:active {
+    transform: scale(0.95);
 }
 
-@media (max-width: 480px) {
-    body {
-        padding: 15px;
-    }
-    
-    .card {
-        padding: 1.2rem;
-        border-radius: 14px;
-    }
+/* Basic header/nav styling for homepage */
+header {
+    background-color: var(--card-background);
+    padding: 15px 30px;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    border-bottom: 1px solid var(--border-color);
+}
 
-    #themeToggle {
-        width: 45px;
-        height: 45px;
-        font-size: 1.5rem;
-    }
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header .logo {
+    font-family: var(--font-family-heading);
+    font-size: 1.8em;
+    font-weight: 800;
+    color: var(--link-color); /* Use link color for logo consistency */
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 25px;
+}
+
+header nav ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1em;
+    padding: 5px 0;
+    position: relative;
+}
+
+header nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: var(--link-color);
+    bottom: -5px;
+    left: 0;
+    transition: width 0.3s ease-in-out;
+}
+
+header nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* Basic footer styling for homepage */
+footer {
+    margin-top: auto; /* Pushes footer to the bottom */
+    background-color: var(--card-background);
+    padding: 20px;
+    text-align: center;
+    color: var(--text-color);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -2px 10px var(--shadow-color);
 }
