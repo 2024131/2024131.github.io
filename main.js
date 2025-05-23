@@ -5,25 +5,22 @@ document.addEventListener('DOMContentLoaded', function() {
         REDIRECT_URL: '/turbowarp/'
     };
 
-    // DOM Elements
-    const elements = {
-        days: document.getElementById('days'),
-        hours: document.getElementById('hours'),
-        minutes: document.getElementById('minutes'),
-        seconds: document.getElementById('seconds'),
-        themeToggle: document.getElementById('themeToggle')
-    };
-
     // Initialize Theme
     function initTheme() {
+        const themeToggle = document.getElementById('themeToggle');
+        if (!themeToggle) return;
+        
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        elements.themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
     }
 
     // Toggle Theme
     function setupThemeToggle() {
-        elements.themeToggle.addEventListener('click', function() {
+        const themeToggle = document.getElementById('themeToggle');
+        if (!themeToggle) return;
+        
+        themeToggle.addEventListener('click', function() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', newTheme);
@@ -34,15 +31,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update Countdown Display
     function updateCountdownDisplay(diff) {
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+
+        if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        elements.days.textContent = String(days).padStart(2, '0');
-        elements.hours.textContent = String(hours).padStart(2, '0');
-        elements.minutes.textContent = String(minutes).padStart(2, '0');
-        elements.seconds.textContent = String(seconds).padStart(2, '0');
+        daysEl.textContent = String(days).padStart(2, '0');
+        hoursEl.textContent = String(hours).padStart(2, '0');
+        minutesEl.textContent = String(minutes).padStart(2, '0');
+        secondsEl.textContent = String(seconds).padStart(2, '0');
     }
 
     // Handle Countdown Completion
@@ -65,8 +69,13 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(startCountdown, 1000);
     }
 
-    // Initialize
-    initTheme();
-    setupThemeToggle();
-    startCountdown();
+    // Initialize everything
+    function init() {
+        initTheme();
+        setupThemeToggle();
+        startCountdown();
+    }
+
+    // Start the application
+    init();
 });
