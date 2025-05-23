@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Configuration
     const CONFIG = {
-        LAUNCH_DATE: '2025-07-01T00:00:00',
-        REDIRECT_URL: '/turbowarp/'
+        LAUNCH_DATE: '2025-07-01T00:00:00', // YYYY-MM-DDTHH:mm:ss format
+        REDIRECT_URL: 'turbowarp/index.html' // Relative path to your download page
     };
 
     // DOM Elements
@@ -11,33 +11,44 @@ document.addEventListener('DOMContentLoaded', function() {
         hours: document.getElementById('hours'),
         minutes: document.getElementById('minutes'),
         seconds: document.getElementById('seconds'),
-        themeToggle: document.getElementById('themeToggle')
+        themeToggle: document.getElementById('themeToggle'),
+        card: document.querySelector('.card') // Reference to the main card for content change
     };
 
-    // Initialize Theme
+    // --- Theme Management ---
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if (elements.themeToggle) { // Ensure button exists before changing text
+            elements.themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+    }
+
     function initTheme() {
-        if (!elements.themeToggle) return;
-        
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        elements.themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        // Check local storage first, then system preference, else default to light
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            setTheme('dark'); // System prefers dark
+        } else {
+            setTheme('light'); // Default to light
+        }
     }
 
-    // Toggle Theme
     function setupThemeToggle() {
-        if (!elements.themeToggle) return;
-        
-        elements.themeToggle.addEventListener('click', function() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            this.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-        });
+        if (elements.themeToggle) {
+            elements.themeToggle.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                setTheme(newTheme);
+            });
+        }
     }
 
-    // Update Countdown Display
+    // --- Countdown Logic ---
     function updateCountdownDisplay(diff) {
+        // Only update if elements exist (robustness)
         if (!elements.days || !elements.hours || !elements.minutes || !elements.seconds) return;
 
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -51,31 +62,47 @@ document.addEventListener('DOMContentLoaded', function() {
         elements.seconds.textContent = String(seconds).padStart(2, '0');
     }
 
-    // Handle Countdown Completion
+    // Handle Countdown Completion: Show message then redirect
     function handleCountdownEnd() {
-        window.location.href = CONFIG.REDIRECT_URL;
+        if (elements.card) {
+            elements.card.innerHTML = `
+                <div class="header">
+                    <div class="logo">LYT</div>
+                    <h1>We're Live!</h1>
+                    <p class="subtitle">Thanks for waiting. Redirecting you now...</p>
+                </div>
+            `;
+            // Keep theme toggle button
+            elements.themeToggle.style.display = 'flex'; // Ensure it's visible if it was hidden
+        }
+        
+        // Redirect after a short delay to allow message to be seen
+        setTimeout(() => {
+            window.location.href = CONFIG.REDIRECT_URL;
+        }, 3000); // 3 seconds delay
     }
 
-    // Main Countdown Function
+    // Main Countdown Function (recursive setTimeout)
     function startCountdown() {
-        const launchDate = new Date(CONFIG.LAUNCH_DATE);
-        const now = new Date();
-        const diff = launchDate - now;
+        const launchDate = new Date(CONFIG.LAUNCH_DATE).getTime(); // Get launch date in milliseconds
+        const now = new Date().getTime(); // Current time in milliseconds
+        const diff = launchDate - now; // Difference in milliseconds
 
         if (diff <= 0) {
             handleCountdownEnd();
-            return;
+            return; // Stop the countdown
         }
 
         updateCountdownDisplay(diff);
+        // Call itself after 1 second
         setTimeout(startCountdown, 1000);
     }
 
-    // Initialize everything
+    // Initialize everything on DOM Load
     function init() {
         initTheme();
         setupThemeToggle();
-        startCountdown();
+        startCountdown(); // Start the countdown immediately
     }
 
     // Start the application
