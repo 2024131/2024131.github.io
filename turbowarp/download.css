@@ -1,0 +1,63 @@
+/* Styles specific to turbowarp/index.html (Download page) */
+
+/* The .card class from base.css applies the general card styling */
+/* Override specific padding if needed for this card */
+.download-card {
+    /* max-width is already handled by .card in base.css */
+    /* padding: 2.5rem; */ /* If you want different padding than .card, define here */
+}
+
+.download-options {
+    margin-top: 2rem; /* Space above the download options block */
+    display: flex;
+    flex-direction: column; /* Stack download items vertically */
+    gap: 2.5rem; /* Large gap between individual download items */
+}
+
+.download-item {
+    padding-bottom: 1.5rem; /* Space below each item */
+    border-bottom: 1px dashed var(--border-color); /* Dashed separator */
+}
+
+.download-item:last-child {
+    border-bottom: none; /* No border for the last item */
+    padding-bottom: 0;
+}
+
+.download-item h3 {
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.download-item .file-description {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+/* Adjust button margin for download items specifically */
+.download-item .download-btn {
+    margin: 1.5rem 0 0.5rem; /* Adjusted margin to fit within item */
+}
+
+/* Mobile Responsiveness for Download Page */
+@media (max-width: 768px) {
+    .download-item h3 {
+        font-size: 1.3rem;
+    }
+
+    .download-options {
+        gap: 2rem; /* Slightly reduced gap for mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .download-options {
+        gap: 1.5rem; /* Further reduced gap for very small screens */
+    }
+
+    .download-item {
+        padding-bottom: 1rem;
+    }
+}
