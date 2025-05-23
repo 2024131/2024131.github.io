@@ -1,26 +1,78 @@
-/* Styles specific to your main index.html page layout */
+/* Styles specific to index.html (Coming Soon page) */
 
-/* Example: Adjusting main content area */
-main {
-    padding: 40px 20px;
-    max-width: 800px;
-    margin: 40px auto;
+.countdown-section {
+    margin: 2.5rem 0; /* Vertical spacing for the countdown section */
+}
+
+.countdown-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    gap: 0.8rem; /* Space between countdown items */
+}
+
+.countdown-item {
     text-align: center;
-    background-color: var(--card-background); /* Using card background for main content area */
-    border-radius: 12px;
-    box-shadow: 0 4px 20px var(--shadow-color);
-    border: 1px solid var(--border-color);
-    box-sizing: border-box;
+    min-width: 70px; /* Minimum width for each item to prevent squash */
 }
 
-main h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
+.countdown-number {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1; /* Adjust line height to prevent extra space */
+    margin-bottom: 0.3rem;
 }
 
-main p {
-    font-size: 1.1em;
-    margin-bottom: 15px;
+.countdown-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* Add any other specific styles for your homepage here */
+.countdown-separator {
+    font-size: 1.5rem;
+    color: var(--primary-light);
+    margin-top: -0.8rem; /* Adjust position to align with numbers */
+    font-weight: bold;
+}
+
+/* Mobile Responsiveness for Countdown */
+@media (max-width: 768px) {
+    .countdown-number {
+        font-size: 1.8rem;
+    }
+    
+    .countdown-item {
+        min-width: 60px;
+    }
+
+    .countdown-separator {
+        font-size: 1.2rem;
+        margin-top: -0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .countdown-grid {
+        gap: 0.5rem;
+        flex-direction: column; /* Stack items vertically on very small screens */
+    }
+    
+    .countdown-separator {
+        display: none; /* Hide separators when stacked */
+    }
+    
+    .countdown-item {
+        margin-bottom: 10px; /* Add space between stacked items */
+    }
+    .countdown-item:last-child {
+        margin-bottom: 0; /* No margin after the last item */
+    }
+    
+    .countdown-number {
+        font-size: 1.5rem;
+    }
+}
