@@ -1,0 +1,230 @@
+/* --- CSS Variables for Theming --- */
+:root {
+    /* Light theme colors */
+    --primary: #6c5ce7; /* Main accent color (e.g., for logo, numbers, buttons) */
+    --primary-light: #a29bfe; /* Lighter shade of primary (e.g., for separators) */
+    --primary-dark: #5649c0; /* Darker shade of primary (e.g., for button hover) */
+
+    --text: #2d3436; /* Main text color */
+    --text-light: #636e72; /* Lighter text color (e.g., subtitles, labels) */
+
+    --bg: #f9f9f9; /* Overall page background */
+    --card-bg: #ffffff; /* Background for cards/containers */
+    --border-color: #eee; /* Light theme border color */
+
+    --shadow: rgba(0, 0, 0, 0.1); /* Shadow color for light theme */
+}
+
+[data-theme="dark"] {
+    /* Dark theme colors - overrides light theme variables */
+    --primary: #a29bfe; /* Main accent color (e.g., for logo, numbers, buttons) */
+    --primary-light: #847bff; /* Lighter shade of primary (e.g., for separators) */
+    --primary-dark: #6a5fe0; /* Adjusted darker shade for dark theme hover */
+
+    --text: #f5f6fa; /* Main text color */
+    --text-light: #dcdde1; /* Lighter text color (e.g., subtitles, labels) */
+
+    --bg: #1e272e; /* Overall page background */
+    --card-bg: #2f3640; /* Background for cards/containers */
+    --border-color: #4a5a6a; /* Dark theme border color */
+
+    --shadow: rgba(0, 0, 0, 0.3); /* Shadow color for dark theme */
+}
+
+/* --- Global Resets and Transitions --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    /* Apply transition to all relevant properties for smooth theme changes */
+    transition: background-color 0.3s ease, color 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacMacFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; /* Modern font stack */
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex; /* Flexbox for centering content */
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Padding for small screens */
+    line-height: 1.6;
+}
+
+/* --- Container Layout --- */
+.container {
+    width: 100%;
+    max-width: 800px; /* Max width for the main content area */
+    position: relative; /* For positioning the theme toggle if it's inside */
+    display: flex; /* Flexbox to arrange card and button */
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    gap: 30px; /* Space between card and theme toggle */
+}
+
+/* --- Card Styles (Base) --- */
+.card { /* Base card styles apply to both main card and download card */
+    background-color: var(--card-bg);
+    border-radius: 20px;
+    padding: 2.5rem; /* Adjusted padding for better spacing */
+    box-shadow: 0 10px 30px var(--shadow);
+    text-align: center;
+    width: 100%; /* Take full width within its container */
+    max-width: 550px; /* Max width for consistency */
+}
+
+/* --- Header Styles (Base) --- */
+.header {
+    margin-bottom: 2rem;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 auto 1.5rem; /* Center logo and add margin below */
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3); /* Fixed alpha for consistent shadow */
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary); /* Heading color using primary accent */
+}
+
+p { /* General paragraph styling */
+    color: var(--text);
+}
+
+.subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+/* --- Common Button Styles (Base) --- */
+.download-btn { /* Apply to all buttons with this class */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+}
+
+.download-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
+}
+
+/* --- Common Link Styles (Base) --- */
+.direct-link {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.direct-link a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.direct-link a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* --- Theme Toggle Button (Base) --- */
+#themeToggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: 0 4px 10px var(--shadow);
+    z-index: 100;
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+#themeToggle:hover {
+    transform: scale(1.1);
+}
+
+/* --- Base Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    .card {
+        padding: 1.8rem;
+        border-radius: 16px;
+    }
+    
+    .logo {
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    p { /* General paragraph styling */
+        font-size: 0.95rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .download-btn {
+        padding: 0.9rem 1.8rem;
+        font-size: 1rem;
+    }
+
+    #themeToggle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.6rem;
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+    
+    .card {
+        padding: 1.2rem;
+        border-radius: 14px;
+    }
+
+    #themeToggle {
+        width: 45px;
+        height: 45px;
+        font-size: 1.5rem;
+    }
+}
