@@ -1,67 +1,72 @@
-// 配置
-const CONFIG = {
-    LAUNCH_DATE: '2025-07-01T00:00:00',
-    REDIRECT_URL: '/turbowarp/',
-    GDRIVE_ID: '1v0flUz9yYUevio1xke6Mb1nFx6CMeIwf',
-    EMAIL: ['s2024131', 'mykwanghua.edu.my']
-};
+document.addEventListener('DOMContentLoaded', function() {
+    // Configuration
+    const CONFIG = {
+        LAUNCH_DATE: '2025-07-01T00:00:00',
+        REDIRECT_URL: '/turbowarp/'
+    };
 
-// 初始化
-function init() {
-    setupCountdown();
-    setupEmail();
-    setupTheme();
-    detectMobile();
-}
+    // DOM Elements
+    const elements = {
+        days: document.getElementById('days'),
+        hours: document.getElementById('hours'),
+        minutes: document.getElementById('minutes'),
+        seconds: document.getElementById('seconds'),
+        themeToggle: document.getElementById('themeToggle')
+    };
 
-function setupCountdown() {
-    function update() {
-        const now = new Date();
-        const diff = new Date(CONFIG.LAUNCH_DATE) - now;
-        
-        if (diff <= 0) {
-            window.location.href = CONFIG.REDIRECT_URL;
-            return;
-        }
-        
+    // Initialize Theme
+    function initTheme() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        elements.themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Toggle Theme
+    function setupThemeToggle() {
+        elements.themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            this.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        });
+    }
+
+    // Update Countdown Display
+    function updateCountdownDisplay(diff) {
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        document.getElementById('days').textContent = days.toString().padStart(2, '0');
-        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-        
-        setTimeout(update, 1000);
+        elements.days.textContent = String(days).padStart(2, '0');
+        elements.hours.textContent = String(hours).padStart(2, '0');
+        elements.minutes.textContent = String(minutes).padStart(2, '0');
+        elements.seconds.textContent = String(seconds).padStart(2, '0');
     }
-    update();
-}
 
-function setupEmail() {
-    const emailLink = document.getElementById('emailLink');
-    if (emailLink) {
-        emailLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = `mailto:${CONFIG.EMAIL[0]}@${CONFIG.EMAIL[1]}`;
-        });
+    // Handle Countdown Completion
+    function handleCountdownEnd() {
+        window.location.href = CONFIG.REDIRECT_URL;
     }
-}
 
-function setupTheme() {
-    const toggle = document.getElementById('themeToggle');
-    if (toggle) {
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        toggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    // Main Countdown Function
+    function startCountdown() {
+        const launchDate = new Date(CONFIG.LAUNCH_DATE);
+        const now = new Date();
+        const diff = launchDate - now;
+
+        if (diff <= 0) {
+            handleCountdownEnd();
+            return;
+        }
+
+        updateCountdownDisplay(diff);
+        setTimeout(startCountdown, 1000);
     }
-}
 
-function detectMobile() {
-    if (/Mobi|Android/i.test(navigator.userAgent)) {
-        document.documentElement.classList.add('mobile');
-    }
-}
-
-document.addEventListener('DOMContentLoaded', init);
+    // Initialize
+    initTheme();
+    setupThemeToggle();
+    startCountdown();
+});
