@@ -23,15 +23,24 @@
             margin: 1.5rem 0;
             font-size: 1.1rem;
             transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
         }
         .download-btn:hover {
             background: var(--primary-dark);
             transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
         }
         .direct-link {
             margin-top: 1rem;
             font-size: 0.9rem;
             color: var(--text-light);
+        }
+        .direct-link a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .direct-link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -43,20 +52,19 @@
             <p>Your project file is now available</p>
             
             <a href="https://drive.google.com/uc?export=download&id=1v0flUz9yYUevio1xke6Mb1nFx6CMeIwf" 
-               class="download-btn"
-               id="downloadBtn">
-                ↓ Download Now
+               class="download-btn">
+               ↓ Download Now
             </a>
             
             <p class="direct-link">
                 Can't download? <a href="https://drive.google.com/file/d/1v0flUz9yYUevio1xke6Mb1nFx6CMeIwf/view" target="_blank">Open in Google Drive</a>
             </p>
         </div>
-        <button id="themeToggle">🌙</button>
+        <button id="themeToggle" aria-label="Toggle theme">🌙</button>
     </div>
 
     <script>
-        // 主题切换功能
+        // Theme Toggle
         const toggle = document.getElementById('themeToggle');
         const setTheme = (theme) => {
             document.documentElement.setAttribute('data-theme', theme);
@@ -69,14 +77,8 @@
             setTheme(theme === 'dark' ? 'light' : 'dark');
         });
 
-        // 初始化主题
+        // Initialize theme
         setTheme(localStorage.getItem('theme') || 'light');
-
-        // 下载统计（可选）
-        document.getElementById('downloadBtn').addEventListener('click', () => {
-            console.log('Download initiated');
-            // 这里可以添加分析代码
-        });
     </script>
 </body>
 </html>
