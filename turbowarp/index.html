@@ -4,154 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download | LYT Project</title>
-    <link rel="stylesheet" href="../style.css">
-    <style>
-        /* Center the entire page content */
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        /* Card styling */
-        .download-card {
-            width: 100%;
-            max-width: 600px;
-            padding: 2.5rem;
-            text-align: center;
-            border-radius: 20px;
-            background: var(--card-bg);
-            box-shadow: 0 10px 30px var(--shadow);
-            margin: 20px 0;
-        }
-
-        /* Download button */
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--primary);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            margin: 1.5rem 0;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
-        }
-
-        .download-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
-        }
-
-        /* Alternative link */
-        .direct-link {
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        .direct-link a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: opacity 0.2s;
-        }
-
-        .direct-link a:hover {
-            opacity: 0.8;
-            text-decoration: underline;
-        }
-
-        /* Theme toggle button */
-        #themeToggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px var(--shadow);
-            z-index: 100;
-            transition: transform 0.3s;
-        }
-
-        #themeToggle:hover {
-            transform: scale(1.1);
-        }
-
-        /* Mobile responsiveness */
-        @media (max-width: 768px) {
-            .download-card {
-                padding: 1.8rem;
-                border-radius: 16px;
-            }
-            
-            .download-btn {
-                padding: 0.9rem 1.8rem;
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 15px;
-            }
-            
-            .download-card {
-                padding: 1.5rem;
-                border-radius: 14px;
-            }
-            
-            #themeToggle {
-                width: 45px;
-                height: 45px;
-                bottom: 15px;
-                right: 15px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="../style.css"> <link rel="icon" href="../favicon.ico" type="image/x-icon"> <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="download-card">
-        <div class="logo">LYT</div>
-        <h1>Download Ready</h1>
-        <p>Your project file is now available</p>
-        
-        <a href="https://drive.google.com/uc?export=download&id=1v0flUz9yYUevio1xke6Mb1nFx6CMeIwf" 
-           class="download-btn">
-           ↓ Download Now
-        </a>
-        
-        <p class="direct-link">
-            Can't download? <a href="https://drive.google.com/file/d/1v0flUz9yYUevio1xke6Mb1nFx6CMeIwf/view" target="_blank">Open in Google Drive</a>
-        </p>
-    </div>
+    <div class="container"> <div class="download-card">
+            <div class="logo">LYT</div>
+            <h1>Download Ready</h1>
+            <p>Select your project file to download:</p>
+            
+            <div class="download-options">
+                <div class="download-item">
+                    <h3>LYT Project File (Latest)</h3>
+                    <p class="file-description">Recommended for most users. Version 1.0.0 (Windows/macOS).</p>
+                    <a href="https://drive.google.com/uc?export=download&id=1v0flUz9yYUevio1xke6Mb1nFx6CMeIwf" 
+                       class="download-btn" download="LYT_Project_File_v1.0.0.zip">
+                        ↓ Download v1.0.0
+                    </a>
+                    <p class="direct-link">
+                        Trouble downloading? <a href="https://drive.google.com/file/d/1v0flUz9yYUevio1xke6Mb1nFx6CMeIwf/view" target="_blank" rel="noopener noreferrer">View in Drive</a>
+                    </p>
+                </div>
 
+                <div class="download-item">
+                    <h3>LYT Project File (Older)</h3>
+                    <p class="file-description">For compatibility with older systems. Version 0.9.5 (Windows/macOS).</p>
+                    <a href="https://example.com/lyt_project_v0.9.5.zip" 
+                       class="download-btn" download="LYT_Project_File_v0.9.5.zip">
+                        ↓ Download v0.9.5
+                    </a>
+                    <p class="direct-link">
+                        Alternative download: <a href="https://example.com/lyt_project_v0.9.5_mirror" target="_blank" rel="noopener noreferrer">Mirror Link</a>
+                    </p>
+                </div>
+
+                <div class="download-item">
+                    <h3>LYT Project Source Code</h3>
+                    <p class="file-description">For developers. Includes all source files and documentation.</p>
+                    <a href="https://github.com/your-repo/lyt-project/archive/main.zip" 
+                       class="download-btn" download="LYT_Project_Source.zip">
+                        ↓ Download Source
+                    </a>
+                    <p class="direct-link">
+                        View on GitHub: <a href="https://github.com/your-repo/lyt-project" target="_blank" rel="noopener noreferrer">github.com/your-repo/lyt-project</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
     <button id="themeToggle" aria-label="Toggle theme">🌙</button>
 
     <script>
-        // Theme Toggle Functionality
+        // Theme Toggle Functionality (self-contained for this page)
         const toggleButton = document.getElementById('themeToggle');
         
         function setTheme(theme) {
             document.documentElement.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
-            toggleButton.textContent = theme === 'dark' ? '☀️' : '🌙';
+            if (toggleButton) {
+                toggleButton.textContent = theme === 'dark' ? '☀️' : '🌙';
+            }
         }
 
         function toggleTheme() {
@@ -160,10 +75,21 @@
             setTheme(newTheme);
         }
 
-        // Initialize
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        setTheme(savedTheme);
-        toggleButton.addEventListener('click', toggleTheme);
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                setTheme('dark');
+            } else {
+                setTheme('light');
+            }
+            
+            if (toggleButton) {
+                toggleButton.addEventListener('click', toggleTheme);
+            }
+        });
     </script>
 </body>
 </html>
