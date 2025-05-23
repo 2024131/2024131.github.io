@@ -50,7 +50,7 @@ body {
     padding: 2rem;
     box-shadow: 0 10px 30px var(--shadow);
     text-align: center;
-    overflow: hidden;
+    width: 100%;
 }
 
 .header {
@@ -122,30 +122,6 @@ h1 {
     font-weight: bold;
 }
 
-.cta-section {
-    margin: 2rem 0 1rem;
-}
-
-.cta-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: var(--primary);
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
-}
-
-.cta-button:hover {
-    background: var(--primary-dark);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
-}
-
 #themeToggle {
     position: fixed;
     bottom: 20px;
@@ -164,12 +140,7 @@ h1 {
     z-index: 100;
 }
 
-.theme-icon {
-    font-size: 1.4rem;
-    transition: transform 0.3s;
-}
-
-/* 移动端适配 */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
     .card {
         padding: 1.5rem;
@@ -214,11 +185,6 @@ h1 {
     
     .countdown-separator {
         display: none;
-    }
-    
-    .cta-button {
-        padding: 0.8rem 1.5rem;
-        font-size: 0.9rem;
     }
     
     #themeToggle {
