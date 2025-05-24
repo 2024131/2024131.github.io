@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LYT Projects - Creative game development portfolio">
     <title>LYT Projects | Coming Soon</title>
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="main.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <div class="card">
             <div class="header">
-                <div class="logo">LYT</div>
+                <div class="logo" aria-label="LYT Logo">LYT</div>
                 <h1>Coming Soon</h1>
-                <p class="subtitle">New projects launching soon</p>
+                <p class="subtitle">Exciting new projects launching soon</p>
             </div>
             
             <div class="countdown-section">
@@ -26,17 +28,17 @@
                         <div class="countdown-number" id="days">00</div>
                         <div class="countdown-label">Days</div>
                     </div>
-                    <span class="countdown-separator">:</span>
+                    <span class="countdown-separator" aria-hidden="true">:</span>
                     <div class="countdown-item">
                         <div class="countdown-number" id="hours">00</div>
                         <div class="countdown-label">Hours</div>
                     </div>
-                    <span class="countdown-separator">:</span>
+                    <span class="countdown-separator" aria-hidden="true">:</span>
                     <div class="countdown-item">
                         <div class="countdown-number" id="minutes">00</div>
                         <div class="countdown-label">Minutes</div>
                     </div>
-                    <span class="countdown-separator">:</span>
+                    <span class="countdown-separator" aria-hidden="true">:</span>
                     <div class="countdown-item">
                         <div class="countdown-number" id="seconds">00</div>
                         <div class="countdown-label">Seconds</div>
@@ -46,13 +48,18 @@
             
             <div class="cta-section">
                 <a href="turbowarp/" class="cta-button">
-                    View Current Projects
+                    <i class="fas fa-gamepad"></i> View Current Projects
+                </a>
+                <a href="https://github.com/2024131" class="cta-button secondary">
+                    <i class="fab fa-github"></i> GitHub Profile
                 </a>
             </div>
         </div>
     </div>
 
-    <button id="themeToggle" aria-label="Toggle theme">🌙</button>
+    <button id="themeToggle" aria-label="Toggle theme" class="floating-action-button">
+        <span class="theme-icon" id="themeIcon">🌙</span>
+    </button>
 
     <script src="main.js"></script>
 </body>
