@@ -1,63 +1,71 @@
-/* Styles specific to turbowarp/index.html (Download page) */
-
-/* The .card class from base.css applies the general card styling */
-/* Override specific padding if needed for this card */
 .download-card {
-    /* max-width is already handled by .card in base.css */
-    /* padding: 2.5rem; */ /* If you want different padding than .card, define here */
+    max-width: 800px;
+    padding: 2.5rem;
 }
 
 .download-options {
-    margin-top: 2rem; /* Space above the download options block */
+    margin-top: 2rem;
     display: flex;
-    flex-direction: column; /* Stack download items vertically */
-    gap: 2.5rem; /* Large gap between individual download items */
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .download-item {
-    padding-bottom: 1.5rem; /* Space below each item */
-    border-bottom: 1px dashed var(--border-color); /* Dashed separator */
+    padding-bottom: 1.5rem;
+    border-bottom: 1px dashed var(--border-color);
 }
 
 .download-item:last-child {
-    border-bottom: none; /* No border for the last item */
+    border-bottom: none;
     padding-bottom: 0;
 }
 
-.download-item h3 {
-    font-size: 1.5rem;
-    color: var(--primary);
-    margin-bottom: 0.5rem;
-}
-
-.download-item .file-description {
-    font-size: 0.95rem;
+.file-meta {
+    font-size: 0.85rem;
     color: var(--text-light);
-    margin-bottom: 1rem;
+    margin: 0.5rem 0 1rem;
 }
 
-/* Adjust button margin for download items specifically */
-.download-item .download-btn {
-    margin: 1.5rem 0 0.5rem; /* Adjusted margin to fit within item */
+.download-btn {
+    margin: 0.5rem 0;
 }
 
-/* Mobile Responsiveness for Download Page */
+.support-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.support-section a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.support-section a:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 768px) {
+    .download-card {
+        padding: 2rem;
+    }
+    
     .download-item h3 {
         font-size: 1.3rem;
-    }
-
-    .download-options {
-        gap: 2rem; /* Slightly reduced gap for mobile */
     }
 }
 
 @media (max-width: 480px) {
-    .download-options {
-        gap: 1.5rem; /* Further reduced gap for very small screens */
+    .download-card {
+        padding: 1.5rem;
     }
-
-    .download-item {
-        padding-bottom: 1rem;
+    
+    .download-options {
+        gap: 1.5rem;
+    }
+    
+    .file-meta {
+        font-size: 0.8rem;
     }
 }
