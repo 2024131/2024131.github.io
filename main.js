@@ -1,48 +1,70 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Configuration
+    // Configuration with additional options
     const CONFIG = {
         LAUNCH_DATE: '2025-07-01T00:00:01',
-        REDIRECT_URL: 'turbowarp/'
+        REDIRECT_URL: 'turbowarp/',
+        ENABLE_ANALYTICS: true,
+        DEFAULT_THEME: 'light'
     };
 
-    // DOM Elements
+    // DOM Elements with additional selectors
     const elements = {
         days: document.getElementById('days'),
         hours: document.getElementById('hours'),
         minutes: document.getElementById('minutes'),
         seconds: document.getElementById('seconds'),
-        themeToggle: document.getElementById('themeToggle')
+        themeToggle: document.getElementById('themeToggle'),
+        themeIcon: document.getElementById('themeIcon'),
+        ctaButtons: document.querySelectorAll('.cta-button')
     };
 
-    // Initialize Theme
+    // Initialize Theme with system preference detection
     function initTheme() {
-        const savedTheme = localStorage.getItem('theme') || 'light';
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('theme') || 
+                         (systemPrefersDark ? 'dark' : CONFIG.DEFAULT_THEME);
+        
         document.documentElement.setAttribute('data-theme', savedTheme);
-        if (elements.themeToggle) {
-            elements.themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        updateThemeIcon(savedTheme);
+    }
+
+    // Update theme icon with emoji or font awesome
+    function updateThemeIcon(theme) {
+        if (elements.themeIcon) {
+            elements.themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
         }
     }
 
-    // Toggle Theme
+    // Setup theme toggle with animation
     function setupThemeToggle() {
         if (elements.themeToggle) {
             elements.themeToggle.addEventListener('click', function() {
                 const currentTheme = document.documentElement.getAttribute('data-theme');
                 const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
                 document.documentElement.setAttribute('data-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
-                this.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+                updateThemeIcon(newTheme);
+                
+                // Add animation class
+                this.classList.add('animate-pulse');
+                setTimeout(() => {
+                    this.classList.remove('animate-pulse');
+                }, 300);
             });
         }
     }
 
-    // Update Countdown Display
+    // Enhanced countdown with progress tracking
     function updateCountdown() {
         const now = new Date();
         const launchDate = new Date(CONFIG.LAUNCH_DATE);
         const diff = launchDate - now;
 
         if (diff <= 0) {
+            if (CONFIG.ENABLE_ANALYTICS) {
+                trackEvent('Countdown Complete', 'Redirect to projects');
+            }
             window.location.href = CONFIG.REDIRECT_URL;
             return;
         }
@@ -52,16 +74,50 @@ document.addEventListener('DOMContentLoaded', function() {
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        if (elements.days) elements.days.textContent = String(days).padStart(2, '0');
-        if (elements.hours) elements.hours.textContent = String(hours).padStart(2, '0');
-        if (elements.minutes) elements.minutes.textContent = String(minutes).padStart(2, '0');
-        if (elements.seconds) elements.seconds.textContent = String(seconds).padStart(2, '0');
+        // Update DOM with animation
+        animateCountdownChange('days', days);
+        animateCountdownChange('hours', hours);
+        animateCountdownChange('minutes', minutes);
+        animateCountdownChange('seconds', seconds);
 
         setTimeout(updateCountdown, 1000);
     }
 
-    // Initialize
+    // Animate countdown number changes
+    function animateCountdownChange(id, newValue) {
+        const element = document.getElementById(id);
+        if (element) {
+            const currentValue = parseInt(element.textContent);
+            if (newValue !== currentValue) {
+                element.classList.add('animate-pop');
+                setTimeout(() => {
+                    element.textContent = String(newValue).padStart(2, '0');
+                    element.classList.remove('animate-pop');
+                }, 150);
+            }
+        }
+    }
+
+    // Simple analytics tracking
+    function trackEvent(category, action) {
+        console.log(`[Analytics] ${category}: ${action}`);
+        // Replace with actual analytics implementation
+    }
+
+    // Setup button interactions
+    function setupButtons() {
+        elements.ctaButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                if (CONFIG.ENABLE_ANALYTICS) {
+                    trackEvent('Button Click', this.textContent.trim());
+                }
+            });
+        });
+    }
+
+    // Initialize everything
     initTheme();
     setupThemeToggle();
+    setupButtons();
     updateCountdown();
-});
+}); 
