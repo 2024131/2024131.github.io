@@ -1,5 +1,5 @@
 .countdown-section {
-    margin: 2.5rem 0;
+    margin: var(--space-xl) 0;
     animation: fadeIn 1s ease-out;
 }
 
@@ -8,52 +8,72 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
 }
 
 .countdown-item {
     text-align: center;
-    min-width: 70px;
+    min-width: 80px;
+    position: relative;
 }
 
 .countdown-number {
-    font-size: 2.5rem;
+    font-size: var(--font-size-xxl);
     font-weight: 700;
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     line-height: 1;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-xs);
+    text-shadow: 0 2px 4px var(--primary-transparent);
+    transition: all var(--transition-fast);
+}
+
+.countdown-item:hover .countdown-number {
+    transform: scale(1.05);
 }
 
 .countdown-label {
-    font-size: 0.8rem;
+    font-size: var(--font-size-xs);
     color: var(--text-light);
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-weight: 600;
 }
 
 .countdown-separator {
-    font-size: 2rem;
+    font-size: var(--font-size-xl);
     color: var(--primary-light);
-    margin-top: -1rem;
+    margin-top: calc(var(--space-sm) * -1);
     font-weight: bold;
+    opacity: 0.7;
 }
 
-.cta-section {
-    margin: 3rem 0 1rem;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
+/* Responsive Countdown */
 @media (max-width: 768px) {
     .countdown-number {
-        font-size: 2rem;
+        font-size: var(--font-size-xl);
+    }
+    
+    .countdown-item {
+        min-width: 70px;
+    }
+    
+    .countdown-separator {
+        font-size: var(--font-size-lg);
+        margin-top: calc(var(--space-xs) * -1);
+    }
+}
+
+@media (max-width: 480px) {
+    .countdown-grid {
+        gap: var(--space-sm);
+    }
+    
+    .countdown-number {
+        font-size: var(--font-size-lg);
     }
     
     .countdown-item {
@@ -61,21 +81,10 @@
     }
     
     .countdown-separator {
-        font-size: 1.5rem;
-        margin-top: -0.8rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .countdown-grid {
-        gap: 0.5rem;
-    }
-    
-    .countdown-number {
-        font-size: 1.8rem;
-    }
-    
-    .countdown-separator {
         display: none;
     }
-}
+    
+    .countdown-label {
+        font-size: 0.7rem;
+    }
+} 
