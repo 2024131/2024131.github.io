@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Configuration
     const CONFIG = {
-        LAUNCH_DATE: '2025-10-10T00:00:00',
+        LAUNCH_DATE: '2025-07-01T00:00:01',
         REDIRECT_URL: 'turbowarp/'
     };
 
