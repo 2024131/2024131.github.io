@@ -1,5 +1,6 @@
+/* Countdown styles */
 .countdown-section {
-    margin: var(--space-xl) 0;
+    margin: 2.5rem 0;
     animation: fadeIn 1s ease-out;
 }
 
@@ -8,72 +9,67 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: var(--space-md);
-    margin-bottom: var(--space-lg);
+    gap: 1rem;
 }
 
 .countdown-item {
     text-align: center;
-    min-width: 80px;
-    position: relative;
+    min-width: 70px;
 }
 
 .countdown-number {
-    font-size: var(--font-size-xxl);
+    font-size: 2.5rem;
     font-weight: 700;
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     line-height: 1;
-    margin-bottom: var(--space-xs);
-    text-shadow: 0 2px 4px var(--primary-transparent);
-    transition: all var(--transition-fast);
-}
-
-.countdown-item:hover .countdown-number {
-    transform: scale(1.05);
+    margin-bottom: 0.5rem;
 }
 
 .countdown-label {
-    font-size: var(--font-size-xs);
+    font-size: 0.8rem;
     color: var(--text-light);
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-weight: 600;
 }
 
 .countdown-separator {
-    font-size: var(--font-size-xl);
+    font-size: 2rem;
     color: var(--primary-light);
-    margin-top: calc(var(--space-sm) * -1);
+    margin-top: -1rem;
     font-weight: bold;
-    opacity: 0.7;
 }
 
-/* Responsive Countdown */
+/* Contact section */
+.contact-section {
+    margin-top: 3rem;
+    text-align: center;
+    color: var(--text-light);
+}
+
+.contact-section a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.contact-section a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .countdown-number {
-        font-size: var(--font-size-xl);
-    }
-    
-    .countdown-item {
-        min-width: 70px;
-    }
-    
-    .countdown-separator {
-        font-size: var(--font-size-lg);
-        margin-top: calc(var(--space-xs) * -1);
-    }
-}
-
-@media (max-width: 480px) {
-    .countdown-grid {
-        gap: var(--space-sm);
-    }
-    
-    .countdown-number {
-        font-size: var(--font-size-lg);
+        font-size: 2rem;
     }
     
     .countdown-item {
@@ -81,10 +77,25 @@
     }
     
     .countdown-separator {
+        font-size: 1.5rem;
+        margin-top: -0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .countdown-grid {
+        gap: 0.5rem;
+    }
+    
+    .countdown-number {
+        font-size: 1.8rem;
+    }
+    
+    .countdown-separator {
         display: none;
     }
     
-    .countdown-label {
-        font-size: 0.7rem;
+    .contact-section {
+        font-size: 0.9rem;
     }
 } 
