@@ -1,7 +1,5 @@
 # LYT Projects Portfolio
 
-![LYT Logo](https://via.placeholder.com/100/6c5ce7/FFFFFF?text=LYT)
-
 A showcase of interactive projects and games developed by LYT, hosted on GitHub Pages.
 
 ## 🚀 Live Demo
